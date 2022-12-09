@@ -24,7 +24,7 @@ class Figure
     private ?\DateTime $created_at = null;
 
     #[ORM\Column]
-    private ?int $created_by = null;
+    private ?int $user_id = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
@@ -70,14 +70,14 @@ class Figure
         return $this;
     }
 
-    public function getCreatedBy(): ?int
+    public function getUserId(): ?int
     {
-        return $this->created_by;
+        return $this->user_id;
     }
 
-    public function setCreatedBy(int $created_by): self
+    public function setUserId(int $user_id): self
     {
-        $this->created_by = $created_by;
+        $this->user_id = $user_id;
 
         return $this;
     }

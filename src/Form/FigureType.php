@@ -15,8 +15,7 @@ class FigureType extends AbstractType
             ->add('name')
             ->add('description')
             ->add('difficulty')
-           // ->add('created_at', null, ['widget' => 'single_text'])
-            ->add('created_by')
+            ->add('userId')
         ;
     }
 

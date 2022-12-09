@@ -1,0 +1,34 @@
+Installer symfony : composer require symfony/flex (?bonne commande ? Pas noté !)
+
+1. création controller : php bin/console make:controller TestController
+2. création entity : src/Entity/Person.php
+3. mettre en base de donnée : php bin/console d:s:u (doctrine:schéma update)
+
+Pour mettre à jour :
+php bin/console make:entity Person => mettre à jour l'entity
+Puis remettre en base de donnée : php bin/console d:s:u -f
+
+Semaine prochaine :
+rajouter des personnes dans phpMyAdmin => Brad Pitt => formulaire pour ajouter une personne
+Puis afficher les personnes dans la route (r = Read de CRUD (= SELECT de SQL))
+
+ORM : composer req orm-pack => installer ORM (Object Relational Mapper)
+
+Vendredi 25 nov
+Pour la semaine pro : Voir pour le delete + modification
++ formulaires à customiser
++ refaire des controlleurs + formulaires
+à voir : messages flash
+
+dbdiagram.io
+
+
+
+Prochaine fois (16 décembre) :
+- diagramme UML de classes
+- authentification avec maker
+- relations entre les tables
+- formulaires Angular
+
+Avancer sur : 
+- authentification + création de la table user + relations entre les tables (+ upload d'images)

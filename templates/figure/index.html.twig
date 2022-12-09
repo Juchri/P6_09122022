@@ -14,12 +14,7 @@
                     })
                 }}
 
-                    {{ form_row(formFigure.name) }}
-                    {{ form_row(formFigure.difficulty) }}
-                    {{ form_row(formFigure.description) }}
-                    {{ form_row(formFigure.created_at) }}
-                    {{ form_row(formFigure.created_by) }}
-
+                    {{ form_widget(formFigure) }}
 
                     {% form_theme formFigure _self %}
 

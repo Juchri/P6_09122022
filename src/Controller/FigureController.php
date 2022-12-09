@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use DateTime;
 
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -24,6 +25,7 @@ class FigureController extends AbstractController
         $formFigure->handleRequest($request); //associer ce qui est envoyé
 
         if($formFigure->isSubmitted()){
+            $figure->setCreatedAt(new \DateTime());
             $em->persist($figure);
             $em->flush();
             return $this->redirectToRoute('app_main');

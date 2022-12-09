@@ -22,6 +22,13 @@ Pour la semaine pro : Voir pour le delete + modification
 
 dbdiagram.io
 
-Vendredi 9 décembre
-Diagrammes SQL (+ si possible commencer les formulaires des figures) + formulaires Angular
-Authentification 
+
+
+Prochaine fois (16 décembre) :
+- diagramme UML de classes
+- authentification avec maker
+- relations entre les tables
+- formulaires Angular
+
+Avancer sur : 
+- authentification + création de la table user + relations entre les tables (+ upload d'images)

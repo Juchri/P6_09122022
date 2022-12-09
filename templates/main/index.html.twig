@@ -9,14 +9,15 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <h1>Hello ! ✅</h1>
 
     <div>
-        <a href="{{path('app_test')}}">Ajouter une personne</a><br/>
+        <a href="{{path('app_figure')}}">Ajouter une figure</a><br/>
 
         {% for f in figures %}
         {{ f.name }}
         {{ f.difficulty }}
+
         <a href="{{ path('app_figure_edit', {'id': f.id}) }}">Editer</a>
         <a href="{{ path('app_figure_delete', {'id': f.id}) }}">Supprimer</a><br/>
 

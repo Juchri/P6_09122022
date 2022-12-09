@@ -13,8 +13,9 @@ class FigureType extends AbstractType
     {
         $builder
             ->add('name')
+            ->add('description')
             ->add('difficulty')
-            ->add('created_at')
+           // ->add('created_at', null, ['widget' => 'single_text'])
             ->add('created_by')
         ;
     }

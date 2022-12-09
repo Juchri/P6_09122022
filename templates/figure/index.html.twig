@@ -1,0 +1,31 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    </head>
+    <body>
+        <h1 class="h4 m-4"> Quelle nouvelle figure veux-tu nous partager ? &#x1F3C2; </h1>
+        <div class="container">
+            <div class="row">
+                {{ form_start(formFigure, {
+                    'attr': {
+                        'novalidate': 'novalidate',
+                        'class': 'col-lg-5'
+                        }
+                    })
+                }}
+
+                    {{ form_row(formFigure.name) }}
+                    {{ form_row(formFigure.difficulty) }}
+                    {{ form_row(formFigure.description) }}
+                    {{ form_row(formFigure.created_at) }}
+                    {{ form_row(formFigure.created_by) }}
+
+
+                    {% form_theme formFigure _self %}
+
+                    <button type="submit" class="btn btn-primary">Créer</button>
+                {{ form_end(formFigure) }}
+            </div>
+        </div>
+    </body>
+</html>

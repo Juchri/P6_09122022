@@ -11,7 +11,10 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use DateTime;
 
+use App\Repository\FigureRepository;
+
 use Doctrine\ORM\EntityManagerInterface;
+
 
 class FigureController extends AbstractController
 {
@@ -37,6 +40,14 @@ class FigureController extends AbstractController
     }
 
 
+    #[Route('/figure/{id<\d+>}', name: 'app_figure_show')]
+    public function show(Figure $figure, FigureRepository $repoFigure): Response
+    {
+        return $this->render('figure/show.html.twig', [
+            'figure' => $repoFigure->find($figure),
+        ]);
+    }
+
     #[Route('/figure/edit/{id<\d+>}', name: 'app_figure_edit')]
     public function edit(Request $request, Figure $figure, EntityManagerInterface $em)
     {
@@ -52,8 +63,8 @@ class FigureController extends AbstractController
         return $this->render('figure/index.html.twig', array(
             'formFigure' => $formFigure->createView(),
         ));
+        
     }
-
 
     #[Route('/figure/delete/{id<\d+>}', name: 'app_figure_delete')]
     public function delete(Request $request,  Figure $figure, EntityManagerInterface $em)

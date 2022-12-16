@@ -20,15 +20,30 @@ Pour la semaine pro : Voir pour le delete + modification
 + refaire des controlleurs + formulaires
 à voir : messages flash
 
-dbdiagram.io
+diagrammes :
+- https://dbdiagram.io/d/63930cf9bae3ed7c4545cd22 
+- https://app.diagrams.net/#G1oKw5-AT4hdlUS7I62LZ3EV68vT1drsxr 
+- https://app.diagrams.net/#G14-21RlZoN6buCyc8sQWZNCh1-Ijnt6WX 
 
+Lectures : 
+- Pour faire des étoiles: https://github.com/blackknight467/StarRatingBundle 
 
 
 Prochaine fois (16 décembre) :
-- diagramme UML de classes
+- diagramme UML de classes / 
 - authentification avec maker
 - relations entre les tables
 - formulaires Angular
 
 Avancer sur : 
 - authentification + création de la table user + relations entre les tables (+ upload d'images)
+- page où on voit juste une figure
+
+
+Prochaine fois (21 décembre / 18h30) :
+- relations entre les tables
+- formulaires Angular
+
+Avancer sur :
+- upload d'images
+- diagramme UML de classes

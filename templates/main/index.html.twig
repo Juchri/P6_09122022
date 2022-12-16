@@ -12,13 +12,17 @@
 
     <div class="container row">
            {% for f in figures %}
-                <div class="card mx-auto" style="width: 45%;">
-                    <img src="https://user.oc-static.com/upload/2016/11/17/14793747168201_snowboard_neige_figure_saut_shutterstock_3516624621.jpg" class="card-img-top" alt="Accroche HTML">
-                    <div class="card-body">
-                        <h2 class="card-title h4"> {{ f.name }} </h2>
-                        <h3 class="card-subtitle h6 text-secondary py-1"> Difficulté {{ f.difficulty }} </h3>
-                        <p class="card-text h6 text-justify py-2"> {{ f.description }} </p>
-                        <a href="{{ path('app_figure_edit', {'id': f.id}) }}"  class="btn btn-primary">Editer</a>
+                <div class="card mx-auto mb-4 p-0 col-md-5">
+                    <a href="{{ path('app_figure_show', {'id': f.id}) }}" >
+                        <img src="https://user.oc-static.com/upload/2016/11/17/14793747168201_snowboard_neige_figure_saut_shutterstock_3516624621.jpg" class="card-img-top" alt="Accroche HTML">
+                        <div class="card-body">
+                            <h2 class="card-title h4"> {{ f.name }} </h2>
+                            <h3 class="card-subtitle h6 text-secondary py-1"> Difficulté {{ f.difficulty }} </h3>
+                            <p class="card-text h6 text-justify py-2"> {{ f.description }} </p>
+                        </div>
+                    </a>
+                    <div class="row ml-4 mb-4">
+                        <a href="{{ path('app_figure_edit', {'id': f.id}) }}"  class="btn btn-primary mr-4">Editer</a>
                         <a href="{{ path('app_figure_delete', {'id': f.id}) }}"  class="btn btn-danger">Supprimer</a><br/>
                     </div>
                 </div>

@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Snow Tricks{% endblock %}
+
+{% block body %}
+
+<div class="example-wrapper">
+    <div class="container column">
+        <div class="mb-4 col-md-9">
+            <img src="https://user.oc-static.com/upload/2016/11/17/14793747168201_snowboard_neige_figure_saut_shutterstock_3516624621.jpg" class="card-img-top" alt="Accroche HTML" />
+            <div class="card-body">
+                <h1 class="card-title h4"> {{ figure.name }} </h1>
+                <h3 class="card-subtitle h6 text-secondary py-1"> Difficulté {{ figure.difficulty }} </h3>
+                <p class="card-text h6 text-justify py-2"> {{ figure.description }} </p>
+                <a href="{{ path('app_figure_edit', {'id': figure.id}) }}"  class="btn btn-primary">Editer</a>
+                <a href="{{ path('app_figure_delete', {'id': figure.id}) }}"  class="btn btn-danger">Supprimer</a><br/>
+            </div>
+        </div>
+         <a href="{{ path('app_main')}}"  class="btn btn-light ml-auto">Retour aux figures</a>
+    </div>
+
+
+</div>
+
+
+{% endblock %}

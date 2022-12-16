@@ -30,10 +30,20 @@ Lectures :
 
 
 Prochaine fois (16 décembre) :
-- diagramme UML de classes
+- diagramme UML de classes / 
 - authentification avec maker
 - relations entre les tables
 - formulaires Angular
 
 Avancer sur : 
 - authentification + création de la table user + relations entre les tables (+ upload d'images)
+- page où on voit juste une figure
+
+
+Prochaine fois (21 décembre / 18h30) :
+- relations entre les tables
+- formulaires Angular
+
+Avancer sur :
+- upload d'images
+- diagramme UML de classes

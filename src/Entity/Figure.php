@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\FigureRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -28,6 +30,19 @@ class Figure
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
+
+    #[ORM\OneToMany(mappedBy: 'figure', targetEntity: Message::class, orphanRemoval: true)]
+    private Collection $messages;
+
+    #[ORM\ManyToOne(inversedBy: 'figures')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $creator = null;
+
+    public function __construct()
+    {
+        $this->messages = new ArrayCollection();
+    }
+
 
     public function getId(): ?int
     {
@@ -70,17 +85,6 @@ class Figure
         return $this;
     }
 
-    public function getUserId(): ?int
-    {
-        return $this->user_id;
-    }
-
-    public function setUserId(int $user_id): self
-    {
-        $this->user_id = $user_id;
-
-        return $this;
-    }
 
     public function getDescription(): ?string
     {
@@ -90,6 +94,48 @@ class Figure
     public function setDescription(?string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Message>
+     */
+    public function getMessages(): Collection
+    {
+        return $this->messages;
+    }
+
+    public function addMessage(Message $message): self
+    {
+        if (!$this->messages->contains($message)) {
+            $this->messages->add($message);
+            $message->setFigure($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMessage(Message $message): self
+    {
+        if ($this->messages->removeElement($message)) {
+            // set the owning side to null (unless already changed)
+            if ($message->getFigure() === $this) {
+                $message->setFigure(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getCreator(): ?User
+    {
+        return $this->creator;
+    }
+
+    public function setCreator(?User $creator): self
+    {
+        $this->creator = $creator;
 
         return $this;
     }

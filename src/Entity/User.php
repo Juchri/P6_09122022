@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -28,6 +30,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     private ?string $password = null;
+
+    #[ORM\OneToMany(mappedBy: 'creator', targetEntity: Figure::class, orphanRemoval: true)]
+    private Collection $figures;
+
+    public function __construct()
+    {
+        $this->figures = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -97,5 +107,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    /**
+     * @return Collection<int, Figure>
+     */
+    public function getFigures(): Collection
+    {
+        return $this->figures;
+    }
+
+    public function addFigure(Figure $figure): self
+    {
+        if (!$this->figures->contains($figure)) {
+            $this->figures->add($figure);
+            $figure->setCreator($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFigure(Figure $figure): self
+    {
+        if ($this->figures->removeElement($figure)) {
+            // set the owning side to null (unless already changed)
+            if ($figure->getCreator() === $this) {
+                $figure->setCreator(null);
+            }
+        }
+
+        return $this;
     }
 }

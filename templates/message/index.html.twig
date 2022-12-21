@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello MessageController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>Espace de discussion! ✅</h1>
+
+    <div class="row">
+        {{ form_start(messageForm, {
+            'attr': {
+                'novalidate': 'novalidate',
+                'class': 'col-lg-5'
+                }
+            })
+        }}
+
+            {{ form_widget(messageForm) }}
+
+            {% form_theme messageForm _self %}
+
+            <button type="submit" class="btn btn-primary">Créer</button>
+        {{ form_end(messageForm) }}
+    </div>
+</div>
+{% endblock %}

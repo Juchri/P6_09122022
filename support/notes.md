@@ -47,3 +47,14 @@ Prochaine fois (21 décembre / 18h30) :
 Avancer sur :
 - upload d'images
 - diagramme UML de classes
+
+
+Prochaine fois (28 décembre / 18h30) :
+- formulaires Angular
+
+Avancer sur :
+- roles de l'admin 
+- upload de messages 
+- font awesome (?)
+- affichage de tous les commentaires sur une page 
+- menu + chat : seulement si on est loggué

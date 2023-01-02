@@ -49,12 +49,12 @@ Avancer sur :
 - diagramme UML de classes
 
 
-Prochaine fois (28 décembre / 18h30) :
+Prochaine fois (29 décembre / 18h15) :
 - formulaires Angular
 
 Avancer sur :
-- roles de l'admin 
-- upload de messages 
+- roles de l'admin
+- upload de messages
 - font awesome (?)
-- affichage de tous les commentaires sur une page 
+- affichage de tous les commentaires sur une page
 - menu + chat : seulement si on est loggué

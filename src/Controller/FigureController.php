@@ -12,6 +12,8 @@ use Symfony\Component\HttpFoundation\Request;
 use DateTime;
 
 use App\Repository\FigureRepository;
+use App\Repository\MessageRepository;
+
 
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -19,7 +21,7 @@ use Doctrine\ORM\EntityManagerInterface;
 class FigureController extends AbstractController
 {
     #[Route('/figure', name: 'app_figure')]
-    public function index(Request $request, EntityManagerInterface $em): Response //Injection de dépendance
+    public function index(Request $request, EntityManagerInterface $em, MessageRepository $repoMessage): Response //Injection de dépendance
     {
 
         $figure = new Figure();
@@ -34,17 +36,17 @@ class FigureController extends AbstractController
             return $this->redirectToRoute('app_main');
          }
 
-        return $this->render('figure/index.html.twig', array(
+        return $this->render('figure/index.html.twig', [
             'formFigure' => $formFigure->createView(),
-        ));
+        ]);
     }
 
 
     #[Route('/figure/{id<\d+>}', name: 'app_figure_show')]
-    public function show(Figure $figure, FigureRepository $repoFigure): Response
+    public function show(Figure $figure): Response
     {
         return $this->render('figure/show.html.twig', [
-            'figure' => $repoFigure->find($figure),
+            'figure' => $figure,
         ]);
     }
 
@@ -63,7 +65,7 @@ class FigureController extends AbstractController
         return $this->render('figure/index.html.twig', array(
             'formFigure' => $formFigure->createView(),
         ));
-        
+
     }
 
     #[Route('/figure/delete/{id<\d+>}', name: 'app_figure_delete')]

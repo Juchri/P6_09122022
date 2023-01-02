@@ -18,10 +18,17 @@
             </div>
         </div>
          <a href="{{ path('app_main')}}"  class="btn btn-light ml-auto">Retour aux figures</a>
-         
     </div>
 
-
+    {% for m in figure.messages %}
+        <div class="card mx-auto mb-4 p-0 col-md-5">
+            <a href="{{ path('app_figure_show', {'id': m.id}) }}" >
+                <div class="card-body">
+                    <h2 class="card-title h4"> {{ m.content }} </h2>
+                </div>
+            </a>
+        </div>
+    {% endfor %}
 </div>
 
 

@@ -70,3 +70,15 @@ Problèmes de la semaine :
 - n'arrive pas à connecter main.css
 - upload image qui bug
 - nom de l'auteur dans les messages
+
+Prochaine fois (13 janvier) :
+
+- bouton supprimer commentaire : delete js is confirm ? 
+- faire un fonction asset twig pour connecter css
+- préparer soutenance blanche !
+- ne pas pouvoir ajouter une noouvelle figure si admin (admin avant dans l'url ?)
+- rediriger main au truc principal 
+- enlever difficulté ? + statut d'un message
+- enlever boutons éditer + supprimer sur toutes les figures (peut-être qu'on peut l'éditer que si on est créateur ?)
+- enlever ajouter une figure si loug_out ! 
+- conntecter images (défuat celle qui y est et si il y a un fichier on le met!) => + mettre en fichier des jolies photos ! 

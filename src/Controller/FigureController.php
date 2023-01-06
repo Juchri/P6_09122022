@@ -34,6 +34,7 @@ class FigureController extends AbstractController
 
         if($formFigure->isSubmitted() && $formFigure->isValid()){
             $figure->setCreatedAt(new \DateTime());
+            $figure->setCreator($this->getUser());
             $file = $formFigure->get('file')->getData();
 
             // this condition is needed because the 'file' field is not required

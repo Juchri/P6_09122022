@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Snow Tricks{% endblock %}
+
+{% block body %}
+
+
+<div class="example-wrapper">
+    <h1 class="h4 m-4"> Les dernières réactions ! &#x1F3C2; </h1>
+
+    <div class="container">
+            <div class="row">
+                <p class="card-text h6 text-justify py-2 mr-4 col-4"> Commentaire </p>
+                <p class="card-text h6 text-justify py-2 mr-4 col-4"> Figure </p>
+            </div>
+
+
+           {% for m in messages %}
+            <div class="row col-12">
+                <p class="h6 mr-4 col-4"> {{ m.content }} </p>
+                <p class="h6 mr-4 col-4">{{ m.figure.name}} </p>
+                <a href="{{ path('app_admin_delete', {'id': m.id}) }}"  class="btn btn-danger">Supprimer</a>
+
+            </div>
+
+            {% endfor %}
+
+    </div>
+
+</div>
+{% endblock %}

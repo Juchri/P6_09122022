@@ -25,9 +25,6 @@ class Figure
     #[ORM\Column]
     private ?\DateTime $created_at = null;
 
-    #[ORM\Column]
-    private ?int $user_id = null;
-
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
@@ -37,6 +34,9 @@ class Figure
     #[ORM\ManyToOne(inversedBy: 'figures')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $creator = null;
+
+    #[ORM\Column(type: 'string')]
+    private $filename;
 
     public function __construct()
     {
@@ -98,6 +98,7 @@ class Figure
         return $this;
     }
 
+
     /**
      * @return Collection<int, Message>
      */
@@ -137,6 +138,17 @@ class Figure
     {
         $this->creator = $creator;
 
+        return $this;
+    }
+
+    public function getFileName()
+    {
+        return $this->filename;
+    }
+
+    public function setFileName($filename)
+    {
+        $this->filename = $filename;
         return $this;
     }
 }

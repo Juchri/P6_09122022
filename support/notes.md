@@ -54,7 +54,19 @@ Prochaine fois (29 décembre / 18h15) :
 
 Avancer sur :
 - roles de l'admin
-- upload de messages
+- upload de message
 - font awesome (?)
 - affichage de tous les commentaires sur une page
 - menu + chat : seulement si on est loggué
+
+Prochaine fois (6 janvier) :
+- formulaires Angular
+
+Avancer sur :
+- roles de l'admin ✅
+- menu + chat : seulement si on est loggué ✅
+
+Problèmes de la semaine : 
+- n'arrive pas à connecter main.css
+- upload image qui bug
+- nom de l'auteur dans les messages

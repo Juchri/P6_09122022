@@ -5,3 +5,7 @@ a{
 a:hover{
     text-decoration: none !important;
 }
+
+.bg-perso-primary{
+    background-color: #6B949E;
+}

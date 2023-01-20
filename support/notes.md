@@ -85,4 +85,10 @@ Prochaine fois (20  janvier) :
 
 Prochaine fois (27  janvier) :
 
-- Vérifier difficulté figure + statut d'un message dans les diagrammes UML
+- Refaire en fonction du design demandé
+- Codacy ?
+- Bonnes pratiques utilisées automatiquement grâce aux makers : bcrypt utilisé plutôt que md5 / twig protège contre attaques XSS / Doctrine protège contre injections SQL / protection des routes faites par Symfony (accès à toutes les routes de la partie admin) / Distribution de tokens dans les formulaires de Symfony pour le log in : obligation de charger le formulaire de la page web => _csrf_token (oblige d'avoir vu la page html avec le token pour quand on valide on renvoie tous les champs avec le token => bien reçu le formulaire et pas de moulinette sur validation du formulaire + protège login contre le brut force)
+- Refaire la maquette (!!!)
+
+
+- Comment faire pour faire un set de 10 figures ?

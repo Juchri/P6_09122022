@@ -81,22 +81,52 @@ class FigureController extends AbstractController
     }
 
     #[Route('/figure/edit/{id<\d+>}', name: 'app_figure_edit')]
-    public function edit(Request $request, Figure $figure, EntityManagerInterface $em)
+    public function edit(Request $request, Figure $figure, EntityManagerInterface $em, SluggerInterface $slugger): Response //Injection de dépendance
     {
         $formFigure = $this->createForm(FigureType::class, $figure);
         $formFigure->handleRequest($request);
 
-        if ($formFigure->isSubmitted() && $formFigure->isValid()) {
-            // va effectuer la requête d'UPDATE en base de données
+     
+        if($formFigure->isSubmitted() && $formFigure->isValid()){
+            $figure->setCreatedAt(new \DateTime());
+            $figure->setCreator($this->getUser());
+            $file = $formFigure->get('file')->getData();
+
+            // this condition is needed because the 'file' field is not required
+            // so the PDF file must be processed only when a file is uploaded
+            if ($file) {
+                $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$file->guessExtension();
+
+                // Move the file to the directory where brochures are stored
+                try {
+                    $file->move(
+                        $this->getParameter('files_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+
+                // updates the 'Filename' property to store the PDF file name
+                // instead of its contents
+                $figure->setFilename($newFilename);
+            }
+
+
+            $em->persist($figure);
             $em->flush();
             return $this->redirectToRoute('app_main');
-        }
+         }
 
-        return $this->render('figure/index.html.twig', array(
+        return $this->render('figure/index.html.twig', [
             'formFigure' => $formFigure->createView(),
-        ));
-
+        ]);
     }
+
+
 
     #[Route('/figure/delete/{id<\d+>}', name: 'app_figure_delete')]
     public function delete(Request $request,  Figure $figure, EntityManagerInterface $em)

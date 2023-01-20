@@ -71,7 +71,7 @@ Problèmes de la semaine :
 - upload image qui bug
 - nom de l'auteur dans les messages
 
-Prochaine fois (13 janvier) :
+Prochaine fois (20  janvier) :
 
 - bouton supprimer commentaire : delete js is confirm ? 
 - faire un fonction asset twig pour connecter css

@@ -14,7 +14,13 @@
            {% for f in figures %}
                 <div class="card mx-auto mb-4 p-0 col-md-5">
                     <a href="{{ path('app_figure_show', {'id': f.id}) }}" >
-                        <img src="https://user.oc-static.com/upload/2016/11/17/14793747168201_snowboard_neige_figure_saut_shutterstock_3516624621.jpg" class="card-img-top" alt="Accroche HTML">
+
+                    {% if f.filename == FALSE %}
+                      <img class="img-fluid" style="height:200px; width:100%;" src="https://user.oc-static.com/upload/2016/11/17/14793747168201_snowboard_neige_figure_saut_shutterstock_3516624621.jpg" class="card-img-top" alt="Illustration {{ f.name }}" />
+                    {% else %}
+                        <img class="img-fluid" style="height:200px; width:100%; object-fit: cover;" src="../uploads/{{ f.filename }}" alt="Illustration {{ f.name }}" />
+                    {% endif %}
+
                         <div class="card-body">
                             <h2 class="card-title h4"> {{ f.name }} </h2>
                             <h3 class="card-subtitle h6 text-secondary py-1"> Difficulté {{ f.difficulty }} </h3>

@@ -20,10 +20,6 @@ class Message
     #[ORM\Column(type: Types::TEXT)]
     private ?string $content = null;
 
-
-    #[ORM\Column]
-    private ?int $status = null;
-
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
@@ -57,18 +53,6 @@ class Message
     public function setContent(string $content): self
     {
         $this->content = $content;
-
-        return $this;
-    }
-
-    public function getStatus(): ?int
-    {
-        return $this->status;
-    }
-
-    public function setStatus(int $status): self
-    {
-        $this->status = $status;
 
         return $this;
     }

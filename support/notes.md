@@ -73,12 +73,16 @@ Problèmes de la semaine :
 
 Prochaine fois (20  janvier) :
 
-- bouton supprimer commentaire : delete js is confirm ? 
+- bouton supprimer commentaire : delete js is confirm ? ✅
 - faire un fonction asset twig pour connecter css
 - préparer soutenance blanche !
-- ne pas pouvoir ajouter une noouvelle figure si admin (admin avant dans l'url ?)
-- rediriger main au truc principal 
-- enlever difficulté ? + statut d'un message
-- enlever boutons éditer + supprimer sur toutes les figures (peut-être qu'on peut l'éditer que si on est créateur ?)
-- enlever ajouter une figure si loug_out ! 
-- conntecter images (défuat celle qui y est et si il y a un fichier on le met!) => + mettre en fichier des jolies photos ! 
+- ne pas pouvoir ajouter une noouvelle figure si admin (admin avant dans l'url ?) ✅
+- rediriger main au truc principal ✅
+- enlever difficulté ? + statut d'un message ✅ 
+- enlever boutons éditer + supprimer sur toutes les figures (peut-être qu'on peut l'éditer que si on est créateur ?) ✅
+- enlever ajouter une figure si loug_out ! ✅
+- conntecter images (défuat celle qui y est et si il y a un fichier on le met!) => + mettre en fichier des jolies photos !  ✅
+
+Prochaine fois (27  janvier) :
+
+- Vérifier difficulté figure + statut d'un message dans les diagrammes UML

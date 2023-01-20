@@ -31,7 +31,6 @@ class MessageController extends AbstractController
 
         if($messageForm->isSubmitted()){
             $message->setSentAt(new \DateTime());
-            $message->setStatus(1);
             $message->setFigure($figure);
             $message->setUser($this->getUser());
     

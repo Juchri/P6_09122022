@@ -13,7 +13,6 @@ class MessageType extends AbstractType
     {
         $builder
             ->add('content')
-            ->add('status')
         ;
     }
 

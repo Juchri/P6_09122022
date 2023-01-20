@@ -19,7 +19,8 @@
             <div class="row col-12">
                 <p class="h6 mr-4 col-4"> {{ m.content }} </p>
                 <p class="h6 mr-4 col-4">{{ m.figure.name}} </p>
-                <a href="{{ path('app_admin_delete', {'id': m.id}) }}"  class="btn btn-danger">Supprimer</a>
+
+                <a href="{{ path('app_admin_delete', {'id': m.id}) }}" onclick="return confirm('Êtes-vous sûr(e) de supprimer ce commentaire ?')">Supprimer</a>
 
             </div>
 

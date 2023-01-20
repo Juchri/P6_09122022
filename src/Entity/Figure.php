@@ -20,9 +20,6 @@ class Figure
     private ?string $name = null;
 
     #[ORM\Column]
-    private ?int $difficulty = null;
-
-    #[ORM\Column]
     private ?\DateTime $created_at = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
@@ -57,18 +54,6 @@ class Figure
     public function setName(string $name): self
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    public function getDifficulty(): ?int
-    {
-        return $this->difficulty;
-    }
-
-    public function setDifficulty(int $difficulty): self
-    {
-        $this->difficulty = $difficulty;
 
         return $this;
     }

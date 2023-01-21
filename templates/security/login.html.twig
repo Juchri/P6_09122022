@@ -16,11 +16,11 @@
     {% endif %}
 
     <div class="container">
-        <div class="row">
-            <div class="col-4 offset-4">
-
+        <div class="col-sm-4 mx-auto mt-4">
+            <div class="row">
                 <h1 class="h3 mb-3 font-weight-normal">Connectez-vous !</h1>
-
+            </div>
+            <div class="row">
 
                 <label for="inputEmail">Mail</label>
                 <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
@@ -35,8 +35,16 @@
                         Se connecter
                     </button>
             </div>
-       </div>
+            <div class="col text-center mt-4">
+                <a href="{{ path('app_register') }}">Créer un compte</a>
+            </div>
+            <div class="col text-center mt-2">
+                <a href="{{ path('app_forgot_password_request')}}">Mot de passe oublié ?</a>
+            </div>
+        </div>
     </div>
+
+
     {#
         Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
         See https://symfony.com/doc/current/security/remember_me.html

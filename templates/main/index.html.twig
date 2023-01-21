@@ -5,7 +5,9 @@
 {% block body %}
 
 
-<div class="example-wrapper">
+<img class="img-fluid cover-image" src="../images/cover.jpeg" alt="Snow Tricks Accueil" />
+
+<div class="wrapper">
     <h1 class="h4 m-4"> Les dernières figures qui font réagir ! &#x1F3C2; </h1>
 
 
@@ -13,29 +15,36 @@
     <a class="btn btn-primary m-4" href="{{path('app_figure')}}">Ajouter une figure</a><br/>
      {% endif %}
 
-    <div class="container row">
+    <div class="container row d-flex justify-content-sm-between mx-auto">
            {% for f in figures %}
-                <div class="card mx-auto mb-4 p-0 col-md-5">
+                <div class="card mb-4 my-2 mx-2 p-0 col-md-2">
                     <a href="{{ path('app_figure_show', {'id': f.id}) }}" >
 
                     {% if f.filename == FALSE %}
-                      <img class="img-fluid" style="height:200px; width:100%;" src="https://user.oc-static.com/upload/2016/11/17/14793747168201_snowboard_neige_figure_saut_shutterstock_3516624621.jpg" class="card-img-top" alt="Illustration {{ f.name }}" />
+                      <img class="img-fluid figure-image" src="https://user.oc-static.com/upload/2016/11/17/14793747168201_snowboard_neige_figure_saut_shutterstock_3516624621.jpg" class="card-img-top" alt="Illustration {{ f.name }}" />
                     {% else %}
-                        <img class="img-fluid" style="height:200px; width:100%; object-fit: cover;" src="../uploads/{{ f.filename }}" alt="Illustration {{ f.name }}" />
+                        <img class="img-fluid figure-image" src="../uploads/{{ f.filename }}" alt="Illustration {{ f.name }}" />
                     {% endif %}
 
-                        <div class="card-body">
+                        <div class="card-body row">
                             <h2 class="card-title h4"> {{ f.name }} </h2>
-                            <p class="card-text h6 text-justify py-2"> {{ f.description }} </p>
+                            <div class="ml-auto">
+                                <a href="{{ path('app_figure_edit', {'id': f.id}) }}"  class="btn">
+                                    <img class="delete"  src="../images/edit.svg" alt="Editer" />
+                                </a>
+
+                                <a onclick="return confirm('Êtes-vous sûr(e) de supprimer ce trick ?')" href="{{ path('app_figure_delete', {'id': f.id}) }}"  class="btn mr-4">
+                                    <img class="delete"  src="../images/delete.svg" alt="Supprimer" />
+                                </a>
+                            </div>
                         </div>
                     </a>
 
                     {% if is_granted('ROLE_ADMIN') %}
 
-                    <div class="row ml-4 mb-4">
-                        <a href="{{ path('app_figure_edit', {'id': f.id}) }}"  class="btn btn-primary mr-3">Editer</a>
-                        <a href="{{ path('app_figure_delete', {'id': f.id}) }}"  class="btn btn-danger mr-3">Supprimer</a>
-                        <a href="{{ path('app_message', {'id': f.id}) }}"  class="btn btn-dark">Chat</a><br/>
+                    <div class="row ml-auto">
+                     
+                       {#  <a href="{{ path('app_message', {'id': f.id}) }}"  class="btn btn-dark">Chat</a><br/> #}
 
                     </div>
 

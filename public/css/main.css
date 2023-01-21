@@ -1,3 +1,7 @@
+h1{
+    font-family: 'Sigmar One', cursive;
+}
+
 a{
    text-decoration: none !important;
 }
@@ -16,4 +20,50 @@ a:hover{
 
 .bg-perso-primary{
     background-color: #6B949E;
+}
+
+.cover-image{
+    max-height: 600px;
+    width: 100%;
+    object-fit: cover;
+}
+
+.figure-image{
+    min-height:200px;
+    width:100%;
+    object-fit: cover;
+}
+
+.bg-dark{
+    background-color: #255C69;
+}
+
+.wrapper{
+    width: 90%;
+    margin: auto;
+}
+
+.h4{
+    font-family: 'Sigmar One', cursive !important;
+    color: #6B949E !important;
+    font-size: 1rem !important;
+}
+
+.delete{
+    width: 10px;
+    height: 10px;
+    object-fit: contain;
+}
+
+.btn-primary{
+    background-color: #6B949E !important;
+    border-color: unset !important;
+    border: none;
+}
+
+.btn-primary:hover{
+    background-color: #6B949E !important;
+    border-color: none;
+    border: none;
+    box-shadow: 12px 12px 2px 1px rgba(0, 0, 255, .2);
 }

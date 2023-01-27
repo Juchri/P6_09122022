@@ -3,7 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Figure;
+use App\Entity\Message;
+use App\Entity\User;
+
 use App\Form\FigureType;
+use App\Form\MessageType;
+
+use App\Repository\FigureRepository;
+use App\Repository\MessageRepository;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -12,14 +19,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\String\Slugger\SluggerInterface;
-use DateTime;
-
-use App\Repository\FigureRepository;
-use App\Repository\MessageRepository;
-
-
 use Doctrine\ORM\EntityManagerInterface;
-
+use DateTime;
 
 class FigureController extends AbstractController
 {
@@ -73,22 +74,40 @@ class FigureController extends AbstractController
 
 
     #[Route('/figure/{id<\d+>}', name: 'app_figure_show')]
-    public function show(Figure $figure): Response
+    public function show(Figure $figure, Request $request, EntityManagerInterface $em): Response
     {
-        return $this->render('figure/show.html.twig', [
+
+        $message = new Message();
+        $messageForm = $this->createForm(MessageType::class, $message); //création formulaire + association entité
+
+        $messageForm->handleRequest($request); //associer ce qui est envoyé
+
+        if($messageForm->isSubmitted()){
+            $message->setSentAt(new \DateTime());
+            $message->setFigure($figure);
+            $message->setUser($this->getUser());
+
+            $em->persist($message);
+            $em->flush();
+            return $this->redirectToRoute('app_main');
+            }
+
+        return $this->render('figure/show.html.twig', array(
+            'messageForm' => $messageForm->createView(),
             'figure' => $figure,
-        ]);
+        ));
+
     }
 
     #[Route('/figure/edit/{id<\d+>}', name: 'app_figure_edit')]
-    public function edit(Request $request, Figure $figure, EntityManagerInterface $em, SluggerInterface $slugger): Response //Injection de dépendance
+    public function edit(Figure $figure, Request $request, EntityManagerInterface $em, SluggerInterface $slugger): Response //Injection de dépendance
     {
         $formFigure = $this->createForm(FigureType::class, $figure);
         $formFigure->handleRequest($request);
 
      
         if($formFigure->isSubmitted() && $formFigure->isValid()){
-            $figure->setCreatedAt(new \DateTime());
+            $figure->setModifiedAt(new \DateTime());
             $figure->setCreator($this->getUser());
             $file = $formFigure->get('file')->getData();
 
@@ -121,8 +140,9 @@ class FigureController extends AbstractController
             return $this->redirectToRoute('app_main');
          }
 
-        return $this->render('figure/index.html.twig', [
+        return $this->render('figure/edit.html.twig', [
             'formFigure' => $formFigure->createView(),
+            'figure' => $figure,
         ]);
     }
 

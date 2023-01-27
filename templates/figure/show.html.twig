@@ -5,33 +5,48 @@
 {% block body %}
 
 <div class="example-wrapper">
-    <div class="container row">
-        <div class="mb-4 col-md-8">
-            <img src="https://user.oc-static.com/upload/2016/11/17/14793747168201_snowboard_neige_figure_saut_shutterstock_3516624621.jpg" class="card-img-top" alt="Accroche HTML" />
+    <div class="container-fluid row">
+        {% if figure.filename == FALSE %}
+        <img class="img-fluid figure-image" style="max-height: 300px;" src="https://user.oc-static.com/upload/2016/11/17/14793747168201_snowboard_neige_figure_saut_shutterstock_3516624621.jpg" class="card-img-top" alt="Illustration {{ f.name }}" />
+        {% else %}
+            <img class="img-fluid figure-image" style="max-height: 300px;" src="../uploads/{{ figure.filename }}" alt="Illustration {{ figure.name }}" />
+        {% endif %}
+    </div>
+    <div class="container col text-center">
+        <div class="mx-auto">
             <div class="card-body">
                 <h1 class="card-title h4"> {{ figure.name }} </h1>
                 <p class="card-text h6 text-justify py-2"> {{ figure.description }} </p>
+                <div class="mx-auto col d-flex justify-content-center">
+                    <p class="card-title h6 m-4" style="font-style: italic; color : grey;">Créée le {{ figure.createdAt |date('d-m-Y') }}</p>
 
-                    {% if is_granted('ROLE_ADMIN') %}
-
-                <a href="{{ path('app_figure_edit', {'id': figure.id}) }}"  class="btn btn-primary">Editer</a>
-                <a href="{{ path('app_figure_delete', {'id': figure.id}) }}"  class="btn btn-danger">Supprimer</a>
-
-                     {% endif %}
-
-               {% if is_granted('ROLE_ADMIN') %}  <a href="{{ path('app_message', {'id': figure.id}) }}"  class="btn btn-dark">Chat</a><br/> {%endif%}
+                    {% if figure.modifiedAt != NULL %}
+                        <p class="card-title h6 m-4" style="font-style: italic; color : grey;">Modifiée le {{ figure.modifiedAt |date('d-m-Y') }}</p>
+                    {% endif %}
+                    <p class="card-title h6 m-4" style="font-style: italic; color : grey;">Groupe de figure : {{ figure.category }}</p>
+                </div>
             </div>
             <a href="{{ path('app_main')}}"  class="btn btn-light ml-auto">Retour aux figures</a>
 
         </div>
 
-        <div class="mb-4 col-md-4">
-        <h3 class="h5">Vos dernières réactions :</h3>
+        {% if is_granted('ROLE_ADMIN') %}
+
+        <div class="col mx-auto mt-4" style="width: 100%;">
+                {{ form_widget(messageForm.content, { 'attr': {'label':false }})}}
+                <button type="submit" class="btn btn-primary m-4">Envoyer</button>
+        </div>
+
+        {% endif %}
+
+        <h3 class="h5 mt-3">Vos dernières réactions :</h3>
+        <div class="col">
+
         {% for m in figure.messages %}
-                <div class="p-2 rounded bg-light">
-                    <p class="card-title h6"> {{ m.content }} </p>
-                   <p class="card-title h6"> - {{ m.user.username }} </p>
-                </div>
+            <div class="p-2 rounded bg-light my-2 mx-auto col-sm-5 col-10">
+                <p class="card-title h6"> {{ m.content }} </p>
+                <p class="card-title h6"> - {{ m.user.username }} </p>
+            </div>
         {% endfor %}
         </div>
     </div>

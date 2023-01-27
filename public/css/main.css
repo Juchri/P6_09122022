@@ -22,6 +22,18 @@ a:hover{
     background-color: #6B949E;
 }
 
+.btn-perso-danger{
+    background-color: #FF874E;
+    color: white;
+}
+
+.btn-perso-danger:hover{
+    transition: 0.9s;
+    color: white;
+    background-color: #FFC7AD;
+    ;
+}
+
 .cover-image{
     max-height: 600px;
     width: 100%;
@@ -62,8 +74,62 @@ a:hover{
 }
 
 .btn-primary:hover{
-    background-color: #6B949E !important;
     border-color: none;
     border: none;
-    box-shadow: 12px 12px 2px 1px rgba(0, 0, 255, .2);
+    background-color: rgba(209, 225, 229) !important;
+    transition: 0.7s;
 }
+
+.visible-phone{
+    display: none;
+}
+
+nav .visible-phone{
+    display: flex;
+    flex-direction: row;
+}
+
+
+  /* On screens that are 600px or less, set the background color to olive */
+  @media (max-width: 768px) {
+    .visible-phone{
+        display: flex;
+    }
+
+    .navbar{
+        display: none;
+    }
+
+   .visible-desktop{
+        display: none;
+    }
+
+    .mobile-menu ul{
+        display: flex;
+        position: fixed;
+        flex-direction: row;
+        margin: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        justify-content: center;
+        z-index: 2;
+        background-color: white;
+        margin-block-start: 0;
+        padding-inline-start: 0;
+    }
+
+    .mobile-menu img{
+       display: flex;
+       height: 25px;
+    }
+
+    .mobile-menu li{
+       list-style-type: none;
+    }
+
+    .mobile-menu li:hover{
+        background-color: #D1E1E5;
+        transition: 0.9s;
+    }
+  }

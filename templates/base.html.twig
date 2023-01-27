@@ -7,8 +7,6 @@
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
         {% block stylesheets %}
 
-            {# the CSS file lives at "public/css/blog.css" #}
-            <link href="{{ asset('css/main.css') }}" rel="stylesheet"/>
 
             <link rel="preconnect" href="https://fonts.googleapis.com">
             <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,6 +15,8 @@
             <script src="https://kit.fontawesome.com/b63bb07c23.js" crossorigin="anonymous"></script>
 
            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+            <link href="{{ asset('css/main.css') }}" rel="stylesheet"/>
 
         {% endblock %}
 
@@ -29,43 +29,72 @@
     </head>
 
      {% if is_granted('ROLE_ADMIN') %}
-        <nav class="navbar navbar-expand-lg navbar-light bg-perso-primary">
+    <nav class="navbar navbar-expand-lg navbar-light bg-perso-primary visible-desktop">
      {% else %}
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light visible-desktop">
      {% endif %}
         <div class="container-fluid">
-        <a class="navbar-brand" href="#">
-            <img src="../images/logo-snow-tricks.svg" width="60" alt="Logo Snow Tricks" />
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
-                <li class="nav-item border-right ml-2">
-                    <a class="nav-link active" aria-current="page" href="{{ path('app_main') }}">Accueil</a>
-                </li>
-                <li class="nav-item border-right ml-2">
-                    <a class="nav-link" href="{{ path('app_main') }}">Figures</a>
-                </li>
-                 {% if is_granted('ROLE_ADMIN') %}
-                <li class="nav-item border-right ml-2">
-                    <a class="nav-link" href="{{ path('app_logout') }}">Log out</a>
-                </li> 
-                <li class="nav-item border-right ml-2">
-                    <a class="nav-link" href="{{ path('app_admin') }}">Admin</a>
-                </li> {% else %}
-                <li class="nav-item border-right ml-2">
-                    <a class="nav-link" href="{{ path('app_login') }}">Log in</a>
-                </li>
-                {% endif %}
-            </ul>
-            
+            <a class="navbar-brand" href="#">
+                <img src="../images/logo-snow-tricks.svg" width="60" alt="Logo Snow Tricks" />
+            </a>
+                <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+                    <li class="nav-item border-right ml-2">
+                        <a class="nav-link active" aria-current="page" href="{{ path('app_main') }}">Accueil</a>
+                    </li>
+                    <li class="nav-item border-right ml-2">
+                        <a class="nav-link" href="{{ path('app_main') }}">Figures</a>
+                    </li>
+                    {% if is_granted('ROLE_ADMIN') %}
+                    <li class="nav-item border-right ml-2">
+                        <a class="nav-link" href="{{ path('app_logout') }}">Log out</a>
+                    </li> 
+                    <li class="nav-item border-right ml-2">
+                        <a class="nav-link" href="{{ path('app_admin') }}">Admin</a>
+                    </li> {% else %}
+                    <li class="nav-item border-right ml-2">
+                        <a class="nav-link" href="{{ path('app_login') }}">Log in</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
         </div>
-    </div>
+    </nav>
+    {% if is_granted('ROLE_ADMIN') %}
+    <nav class="visible-phone mobile-menu bg-perso-primary">
+     {% else %}
+    <nav class="visible-phone mobile-menu bg-light">
+     {% endif %}
+        <ul>
+            <li class="nav-item ml-2">
+                <a class="nav-link" href="{{ path('app_main') }}">
+                     <img src="../images/house.svg" width="60" alt="Accueil" />
+                </a>
+            </li>
+            <li class="nav-item ml-2">
+                <a class="nav-link" href="{{ path('app_logout') }}">
+                    <img src="../images/snow.svg" width="60" alt="Accès aux tricks" />
+                </a>
+            </li> 
+            <li class="nav-item ml-2">
+
+             {% if is_granted('ROLE_ADMIN') %}
+                    <li class="nav-item ml-2">
+                        <a class="nav-link" href="{{ path('app_logout') }}">
+                            <img src="../images/user.svg" width="60" alt="Accès à son compte" />
+                        </a>
+                    </li> {% else %}
+                    <li class="nav-item ml-2">
+                        <a class="nav-link" href="{{ path('app_login') }}">
+                            <img src="../images/user.svg" width="60" alt="Accès à son compte" />
+                        </a>
+                    </li>
+                    {% endif %}
+            </li>
+        </ul>
     </nav>
 
     <body>
         {% block body %}{% endblock %}
     </body>
+
 </html>

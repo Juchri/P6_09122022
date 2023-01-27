@@ -33,7 +33,13 @@ class Figure
     private ?User $creator = null;
 
     #[ORM\Column(type: 'string')]
-    private $filename;
+    private $filename  = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $category = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $modified_at = null;
 
     public function __construct()
     {
@@ -136,4 +142,29 @@ class Figure
         $this->filename = $filename;
         return $this;
     }
+
+    public function getCategory(): ?string
+    {
+        return $this->category;
+    }
+
+    public function setCategory(string $category): self
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    public function getModifiedAt(): ?\DateTimeInterface
+    {
+        return $this->modified_at;
+    }
+
+    public function setModifiedAt(?\DateTimeInterface $modified_at): self
+    {
+        $this->modified_at = $modified_at;
+
+        return $this;
+    }
+
 }

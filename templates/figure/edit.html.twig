@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Snow Tricks{% endblock %}
+
+{% block body %}
+
+
+{{ form_start(formFigure, {
+                'attr': {
+                    'novalidate': 'novalidate',
+                    'class': 'col'
+                    }
+                })
+            }}
+
+<div class="example-wrapper">
+    <div class="container-fluid row">
+        {% if figure.filename == FALSE %}
+        <img class="img-fluid figure-image" style="max-height: 300px;" src="https://user.oc-static.com/upload/2016/11/17/14793747168201_snowboard_neige_figure_saut_shutterstock_3516624621.jpg" class="card-img-top" alt="Illustration {{ f.name }}" />
+        {% else %}
+            <img class="img-fluid figure-image" style="max-height: 300px;" src="../uploads/{{ figure.filename }}" alt="Illustration {{ figure.name }}" />
+        {% endif %}
+        {% if is_granted('ROLE_ADMIN') %}
+        <div class="container-fluid" style="display: flex; position: absolute; margin-left: auto; justify-content: end; width: 55%;">
+            <a href="{{ path('app_figure_edit', {'id': figure.id}) }}"  class="btn mx-2">
+                <img src="../images/edit-w.svg" height="15" alt="Editer" />
+                {{ form_widget(formFigure.file, { 'attr': {'label':false , 'class':'btn mx-2'}})}}
+            </a>
+            <a href="{{ path('app_figure_delete', {'id': figure.id}) }}"  class="btn mx-2">
+                <img src="../images/delete-w.svg" height="15" alt="Effacer" />
+            </a>
+        </div>
+
+        {% endif %}
+
+    </div>
+    <div class="container col text-center">
+        <div class="mx-auto">
+            <div class="card-body">
+
+
+                {{ form_widget(formFigure.name, { 'attr': {'label':false , 'class':'card-title h4 text-center'}})}}
+                {{ form_widget(formFigure.description, { 'attr': {'label':false , 'style':'height:100px'}})}}
+
+                <div class="mx-auto col d-flex justify-content-center">
+                    <p class="card-title h6 m-4" style="font-style: italic; color : grey;">Créée le {{ figure.createdAt |date('d-m-Y') }}</p>
+
+                    {% if figure.modifiedAt != NULL %}
+                        <p class="card-title h6 m-4" style="font-style: italic; color : grey;">Modifiée le {{ figure.modifiedAt |date('d-m-Y') }}</p>
+                    {% endif %}
+                    <p class="card-title h6 m-4" style="font-style: italic; color : grey;">Groupe de figure : {{ figure.category }}</p>
+                </div>
+            </div>
+
+
+            <a onclick="return confirm('Êtes-vous sûr(e) de supprimer ce trick ?')" href="{{ path('app_figure_delete', {'id': figure.id}) }}"  class="btn btn-perso-danger ml-auto">
+                Supprimer
+            </a>
+            <button type="submit" class="btn btn-primary m-4">Valider</button>
+            {{ form_end(formFigure) }}
+            <a href="{{ path('app_main')}}"  class="btn btn-light ml-auto">Retour aux figures</a>
+
+        </div>
+
+    </div>
+</div>
+
+
+{% endblock %}

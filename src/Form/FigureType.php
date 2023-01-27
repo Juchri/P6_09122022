@@ -9,7 +9,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
 
-
 class FigureType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -17,7 +16,6 @@ class FigureType extends AbstractType
         $builder
             ->add('name')
             ->add('description')
-            ->add('difficulty')
             ->add('file', FileType::class, [
             'label' => 'Image',
 
@@ -29,20 +27,27 @@ class FigureType extends AbstractType
             'required' => false,
 
             // unmapped fields can't define their validation using annotations
+
+            // 'multiple' => true,
+
             // in the associated entity, so you can use the PHP constraint classes
             'constraints' => [
-                new File([
-                    'maxSize' => '5M',
-                    'mimeTypes' => [
-                        'image/webp',
-                        'image/png',
-                        'image/gif',
-                        'image/jpeg'
+
+                      new File([
+                        'maxSize' => '15M',
+                        'mimeTypes' => [
+                            'image/webp',
+                            'image/png',
+                            'image/gif',
+                            'image/jpeg',
+                            'video/mp4',
+                            'application/x-mpegURL',
+                            'video/MP2T'
+                        ],
+                        'mimeTypesMessage' => 'Veuillez uploader une image valide (webp, png, jpeg ou gif)',
+                      ]),
                     ],
-                    'mimeTypesMessage' => 'Veuillez uploader une image valide (webp, png, jpeg ou gif)',
-                ])
-            ],
-        ])
+                  ])
         ;
     }
 

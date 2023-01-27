@@ -71,14 +71,24 @@ Problèmes de la semaine :
 - upload image qui bug
 - nom de l'auteur dans les messages
 
-Prochaine fois (13 janvier) :
+Prochaine fois (20  janvier) :
 
-- bouton supprimer commentaire : delete js is confirm ? 
+- bouton supprimer commentaire : delete js is confirm ? ✅
 - faire un fonction asset twig pour connecter css
 - préparer soutenance blanche !
-- ne pas pouvoir ajouter une noouvelle figure si admin (admin avant dans l'url ?)
-- rediriger main au truc principal 
-- enlever difficulté ? + statut d'un message
-- enlever boutons éditer + supprimer sur toutes les figures (peut-être qu'on peut l'éditer que si on est créateur ?)
-- enlever ajouter une figure si loug_out ! 
-- conntecter images (défuat celle qui y est et si il y a un fichier on le met!) => + mettre en fichier des jolies photos ! 
+- ne pas pouvoir ajouter une noouvelle figure si admin (admin avant dans l'url ?) ✅
+- rediriger main au truc principal ✅
+- enlever difficulté ? + statut d'un message ✅ 
+- enlever boutons éditer + supprimer sur toutes les figures (peut-être qu'on peut l'éditer que si on est créateur ?) ✅
+- enlever ajouter une figure si loug_out ! ✅
+- conntecter images (défuat celle qui y est et si il y a un fichier on le met!) => + mettre en fichier des jolies photos !  ✅
+
+Prochaine fois (27  janvier) :
+
+- Refaire en fonction du design demandé
+- Codacy ?
+- Bonnes pratiques utilisées automatiquement grâce aux makers : bcrypt utilisé plutôt que md5 / twig protège contre attaques XSS / Doctrine protège contre injections SQL / protection des routes faites par Symfony (accès à toutes les routes de la partie admin) / Distribution de tokens dans les formulaires de Symfony pour le log in : obligation de charger le formulaire de la page web => _csrf_token (oblige d'avoir vu la page html avec le token pour quand on valide on renvoie tous les champs avec le token => bien reçu le formulaire et pas de moulinette sur validation du formulaire + protège login contre le brut force)
+- Refaire la maquette (!!!)
+
+
+- Comment faire pour faire un set de 10 figures ?

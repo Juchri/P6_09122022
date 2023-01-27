@@ -1,98 +1,115 @@
-h1{
-    font-family: 'Sigmar One', cursive;
+h1 
+{
+  font-family: 'Sigmar One', cursive;
 }
 
-a{
-   text-decoration: none !important;
+a 
+{
+  text-decoration: none !important;
 }
 
-a:hover{
-    text-decoration: none !important;
+a:hover
+{
+  text-decoration: none !important;
 }
 
-.example-wrapper {
-    margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif;
+.example-wrapper 
+{
+  margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif;
 }
 
-.example-wrapper code {
-    background: #F5F5F5; padding: 2px 6px;
+.example-wrapper code 
+{
+  background: #F5F5F5; padding: 2px 6px;
 }
 
-.bg-perso-primary{
-    background-color: #6B949E;
+.bg-perso-primary 
+{
+  background-color: #6B949E;
 }
 
-.btn-perso-danger{
-    background-color: #FF874E;
-    color: white;
+.btn-perso-danger 
+{
+  background-color: #FF874E;
+  color: white;
 }
 
-.btn-perso-danger:hover{
-    transition: 0.9s;
-    color: white;
-    background-color: #FFC7AD;
-    ;
+.btn-perso-danger:hover 
+{
+  transition: 0.9s;
+  color: white;
+  background-color: #FFC7AD;
 }
 
-.cover-image{
-    max-height: 600px;
-    width: 100%;
-    object-fit: cover;
+.cover-image 
+{
+  max-height: 600px;
+  width: 100%;
+  object-fit: cover;
 }
 
-.figure-image{
-    min-height:200px;
-    width:100%;
-    object-fit: cover;
+.figure-image 
+{
+  min-height:200px;
+  width:100%;
+  object-fit: cover;
 }
 
-.bg-dark{
-    background-color: #255C69;
+.bg-dark 
+{
+  background-color: #255C69;
 }
 
-.wrapper{
-    width: 90%;
-    margin: auto;
+.wrapper 
+{
+  width: 90%;
+  margin: auto;
 }
 
-.h4{
-    font-family: 'Sigmar One', cursive !important;
-    color: #6B949E !important;
-    font-size: 1rem !important;
+.h4 
+{
+  font-family: 'Sigmar One', cursive !important;
+  color: #6B949E !important;
+  font-size: 1rem !important;
 }
 
-.delete{
-    width: 10px;
-    height: 10px;
-    object-fit: contain;
+.delete 
+{
+  width: 10px;
+  height: 10px;
+  object-fit: contain;
 }
 
-.btn-primary{
-    background-color: #6B949E !important;
-    border-color: unset !important;
-    border: none;
+.btn-primary 
+{
+  background-color: #6B949E !important;
+  border-color: unset !important;
+  border: none;
 }
 
-.btn-primary:hover{
-    border-color: none;
-    border: none;
-    background-color: rgba(209, 225, 229) !important;
-    transition: 0.7s;
+.btn-primary:hover 
+{
+  border-color: none;
+  border: none;
+  background-color: rgba(209, 225, 229) !important;
+  transition: 0.7s;
 }
 
-.visible-phone{
-    display: none;
+.visible-phone 
+{
+  display: none;
 }
 
-nav .visible-phone{
-    display: flex;
-    flex-direction: row;
+nav .visible-phone 
+{
+  display: flex;
+  flex-direction: row;
 }
 
 
   /* On screens that are 600px or less, set the background color to olive */
   @media (max-width: 768px) {
-    .visible-phone{
+    .visible-phone {
         display: flex;
     }
 

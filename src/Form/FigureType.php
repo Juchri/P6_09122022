@@ -16,6 +16,7 @@ class FigureType extends AbstractType
         $builder
             ->add('name')
             ->add('description')
+            ->add('category')
             ->add('file', FileType::class, [
             'label' => 'Image',
 

@@ -149,7 +149,7 @@ class FigureController extends AbstractController
 
 
     #[Route('/figure/delete/{id<\d+>}', name: 'app_figure_delete')]
-    public function delete(Request $request,  Figure $figure, EntityManagerInterface $em)
+    public function delete(Figure $figure, EntityManagerInterface $em)
     {
         $em->remove($figure);
         $em->flush();

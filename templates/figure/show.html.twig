@@ -7,7 +7,7 @@
 <div class="example-wrapper">
     <div class="container-fluid row">
         {% if figure.filename == FALSE %}
-        <img class="img-fluid figure-image" style="max-height: 300px;" src="https://user.oc-static.com/upload/2016/11/17/14793747168201_snowboard_neige_figure_saut_shutterstock_3516624621.jpg" class="card-img-top" alt="Illustration {{ f.name }}" />
+        <img class="img-fluid figure-image" style="max-height: 300px;" src="https://user.oc-static.com/upload/2016/11/17/14793747168201_snowboard_neige_figure_saut_shutterstock_3516624621.jpg" class="card-img-top" alt="Illustration {{ figure.name }}" />
         {% else %}
             <img class="img-fluid figure-image" style="max-height: 300px;" src="../uploads/{{ figure.filename }}" alt="Illustration {{ figure.name }}" />
         {% endif %}
@@ -15,7 +15,7 @@
     <div class="container col text-center">
         <div class="mx-auto">
             <div class="card-body">
-                <h1 class="card-title h4"> {{ figure.name }} </h1>
+                <h1 class="card-title h4-perso"> {{ figure.name }} </h1>
                 <p class="card-text h6 text-justify py-2"> {{ figure.description }} </p>
                 <div class="mx-auto col d-flex justify-content-center">
                     <p class="card-title h6 m-4" style="font-style: italic; color : grey;">Créée le {{ figure.createdAt |date('d-m-Y') }}</p>
@@ -34,7 +34,7 @@
 
         <div class="col mx-auto mt-4" style="width: 100%;">
                 {{ form_widget(messageForm.content, { 'attr': {'label':false }})}}
-                <button type="submit" class="btn btn-primary m-4">Envoyer</button>
+                <button type="submit" class="btn btn-primary-perso m-4">Envoyer</button>
         </div>
 
         {% endif %}

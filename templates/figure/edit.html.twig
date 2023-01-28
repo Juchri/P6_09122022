@@ -39,7 +39,7 @@
             <div class="card-body">
 
 
-                {{ form_widget(formFigure.name, { 'attr': {'label':false , 'class':'card-title h4 text-center'}})}}
+                {{ form_widget(formFigure.name, { 'attr': {'label':false , 'class':'card-title h4-perso text-center'}})}}
                 {{ form_widget(formFigure.description, { 'attr': {'label':false , 'style':'height:100px'}})}}
 
                 <div class="mx-auto col d-flex justify-content-center">
@@ -56,7 +56,7 @@
             <a onclick="return confirm('Êtes-vous sûr(e) de supprimer ce trick ?')" href="{{ path('app_figure_delete', {'id': figure.id}) }}"  class="btn btn-perso-danger ml-auto">
                 Supprimer
             </a>
-            <button type="submit" class="btn btn-primary m-4">Valider</button>
+            <button type="submit" class="btn btn-primary-perso m-4">Valider</button>
             {{ form_end(formFigure) }}
             <a href="{{ path('app_main')}}"  class="btn btn-light ml-auto">Retour aux figures</a>
 

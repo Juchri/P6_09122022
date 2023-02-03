@@ -31,6 +31,8 @@ class FigureController extends AbstractController
      *
      * @return void
      */
+
+
     public function index(Request $request, EntityManagerInterface $emi, SluggerInterface $slugger): Response
     {
 
@@ -52,15 +54,15 @@ class FigureController extends AbstractController
                 $safeFilename = $slugger->slug($originalFilename);
                 $newFilename = $safeFilename.'-'.uniqid().'.'.$file->guessExtension();
 
-              // Move the file to the directory where brochures are stored !
+                // Move the file to the directory where brochures are stored !
                 try {
                   $file->move(
-                    $this->getParameter('files_directory'),
-                    $newFilename
-                    );
-                  } catch (FileException $e) {
+                  $this->getParameter('files_directory'),
+                  $newFilename
+                  );
+                } catch (FileException $e) {
                       // ... Handle exception if something happens during file upload !
-                  }
+                }
 
                   // Updates the 'Filename' property to store the PDF file name !
                   // Instead of its contents !
@@ -76,83 +78,89 @@ class FigureController extends AbstractController
       }
 
       #[Route('/figure/{id<\d+>}', name: 'app_figure_show')]
-        /**
+      /**
        * Showing figures
        *
        * @return void
        */
+
+
       public function show(Figure $figure, Request $request, EntityManagerInterface $emi): Response
       {
 
-          $message = new Message();
-          $messageForm = $this->createForm(MessageType::class, $message);
+        $message = new Message();
+        $messageForm = $this->createForm(MessageType::class, $message);
 
-          $messageForm->handleRequest($request);
+        $messageForm->handleRequest($request);
 
-          if ($messageForm->isSubmitted() === TRUE) {
-              $message->setSentAt(new \DateTime());
-              $message->setFigure($figure);
-              $message->setUser($this->getUser());
+        if ($messageForm->isSubmitted() === TRUE) {
+            $message->setSentAt(new \DateTime());
+            $message->setFigure($figure);
+            $message->setUser($this->getUser());
 
-              $emi->persist($message);
-              $emi->flush();
-              return $this->redirectToRoute('app_main');
-              }
-
-          return $this->render('figure/show.html.twig', [
-              'messageForm' => $messageForm->createView(),
-              'figure' => $figure]);
-      }
-
-  #[Route('/figure/edit/{id<\d+>}', name: 'app_figure_edit')]
-      /**
-     * Edit figures
-     *
-     * @return void
-     */
-    public function edit(Figure $figure, Request $request, EntityManagerInterface $emi, SluggerInterface $slugger): Response
-    {
-        $formFigure = $this->createForm(FigureType::class, $figure);
-        $formFigure->handleRequest($request);
-
-        if ($formFigure->isSubmitted() && $formFigure->isValid()) {
-          $figure->setModifiedAt(new \DateTime());
-          $figure->setCreator($this->getUser());
-          $file = $formFigure->get('file')->getData();
-
-          if ($file) {
-            $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-            $safeFilename = $slugger->slug($originalFilename);
-            $newFilename = $safeFilename.'-'.uniqid().'.'.$file->guessExtension();
-
-            try {
-              $file->move(
-                $this->getParameter('files_directory'),
-                $newFilename
-                );
-              } catch (FileException $e) {
-              }
-
-              $figure->setFilename($newFilename);
-            }
-
-            $emi->persist($figure);
+            $emi->persist($message);
             $emi->flush();
             return $this->redirectToRoute('app_main');
           }
 
-          return $this->render('figure/edit.html.twig', [
-            'formFigure' => $formFigure->createView(),
+          return $this->render('figure/show.html.twig', [
+            'messageForm' => $messageForm->createView(),
             'figure' => $figure]);
+      }
+
+    #[Route('/figure/edit/{id<\d+>}', name: 'app_figure_edit')]
+     /**
+     * Edit figures
+     *
+     * @return void
+     */
+
+
+    public function edit(Figure $figure, Request $request, EntityManagerInterface $emi, SluggerInterface $slugger): Response
+    {
+      $formFigure = $this->createForm(FigureType::class, $figure);
+      $formFigure->handleRequest($request);
+
+      if ($formFigure->isSubmitted() && $formFigure->isValid()) {
+        $figure->setModifiedAt(new \DateTime());
+        $figure->setCreator($this->getUser());
+        $file = $formFigure->get('file')->getData();
+
+      if ($file) {
+        $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+        $safeFilename = $slugger->slug($originalFilename);
+        $newFilename = $safeFilename.'-'.uniqid().'.'.$file->guessExtension();
+
+        try {
+          $file->move(
+            $this->getParameter('files_directory'),
+            $newFilename
+            );
+          } catch (FileException $e) {
+          }
+
+          $figure->setFilename($newFilename);
+        }
+
+        $emi->persist($figure);
+        $emi->flush();
+        return $this->redirectToRoute('app_main');
+      }
+
+      return $this->render('figure/edit.html.twig', [
+        'formFigure' => $formFigure->createView(),
+        'figure' => $figure]);
     }
 
     /**
-   * Delete figures
-   *
-   * @return void
-   */
+     * Delete figures
+     *
+     * @return void
+     */
+
+
     #[Route('/figure/delete/{id<\d+>}', name: 'app_figure_delete')]
-    public function delete(Figure $figure, EntityManagerInterface $em)
+    public function delete(Figure $figure, EntityManagerInterface $emi)
     {
         $emi->remove($figure);
         $emi->flush();

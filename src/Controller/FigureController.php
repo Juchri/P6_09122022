@@ -103,9 +103,7 @@ class FigureController extends AbstractController
             return $this->redirectToRoute('app_main');
           }
 
-          return $this->render('figure/show.html.twig', [
-            'messageForm' => $messageForm->createView(),
-            'figure' => $figure]);
+          return $this->render('figure/show.html.twig', ['messageForm' => $messageForm->createView(),'figure' => $figure]);
       }
 
     #[Route('/figure/edit/{id<\d+>}', name: 'app_figure_edit')]
@@ -118,34 +116,34 @@ class FigureController extends AbstractController
 
     public function edit(Figure $figure, Request $request, EntityManagerInterface $emi, SluggerInterface $slugger): Response
     {
-      $formFigure = $this->createForm(FigureType::class, $figure);
-      $formFigure->handleRequest($request);
+        $formFigure = $this->createForm(FigureType::class, $figure);
+        $formFigure->handleRequest($request);
 
-      if ($formFigure->isSubmitted() && $formFigure->isValid()) {
-        $figure->setModifiedAt(new \DateTime());
-        $figure->setCreator($this->getUser());
-        $file = $formFigure->get('file')->getData();
+        if ($formFigure->isSubmitted() && $formFigure->isValid()) {
+          $figure->setModifiedAt(new \DateTime());
+          $figure->setCreator($this->getUser());
+          $file = $formFigure->get('file')->getData();
 
-      if ($file) {
-        $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-        $safeFilename = $slugger->slug($originalFilename);
-        $newFilename = $safeFilename.'-'.uniqid().'.'.$file->guessExtension();
+        if ($file) {
+          $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+          $safeFilename = $slugger->slug($originalFilename);
+          $newFilename = $safeFilename.'-'.uniqid().'.'.$file->guessExtension();
 
-        try {
-          $file->move(
-            $this->getParameter('files_directory'),
-            $newFilename
-            );
-          } catch (FileException $e) {
+          try {
+            $file->move(
+              $this->getParameter('files_directory'),
+              $newFilename
+              );
+            } catch (FileException $e) {
+            }
+
+            $figure->setFilename($newFilename);
           }
 
-          $figure->setFilename($newFilename);
+          $emi->persist($figure);
+          $emi->flush();
+          return $this->redirectToRoute('app_main');
         }
-
-        $emi->persist($figure);
-        $emi->flush();
-        return $this->redirectToRoute('app_main');
-      }
 
       return $this->render('figure/edit.html.twig', [
         'formFigure' => $formFigure->createView(),

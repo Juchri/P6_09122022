@@ -5,6 +5,9 @@ namespace App\Controller;
 use App\Entity\Figure;
 use App\Entity\Message;
 use App\Entity\User;
+use App\Entity\Image;
+use App\Entity\Video;
+
 
 use App\Form\FigureType;
 use App\Form\MessageType;
@@ -15,11 +18,13 @@ use App\Repository\MessageRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Doctrine\ORM\EntityManagerInterface;
+
 use DateTime;
 
 class FigureController extends AbstractController
@@ -164,6 +169,45 @@ class FigureController extends AbstractController
         $emi->flush();
 
         return $this->redirectToRoute('app_main');
+    }
+
+    #[Route('/add-video', name: 'add_video')]
+    public function add_video(Request $request, EntityManagerInterface $emi, FigureRepository $repo, SluggerInterface $slugger)
+    {
+      //var_dump($request->$request->get('title')); die;
+      $video = new Video();
+      //  $video->setTitle($request->request->get('title'));
+
+        $videoFile = $request->request->get('title');
+
+        if($videoFile){
+          // $originalFilename = $request->request->get('title');
+          $safeVideoFile = $slugger->slug($videoFile);
+          $newFilename = $safeVideoFile.'-'.uniqid().'.'.$videoFile->guessExtension();
+
+          try {
+            $videoFile->move(
+              $this->getParameter('files_directory'),
+              $newFilename
+              );
+            } catch (FileException $e) {
+          }
+
+          $video->setTitle($newFilename);
+        }
+      
+
+        $id = $request->request->get('id');
+
+        $figure = $repo->find($id);
+        $video->setFigure($figure);
+        $video->setContent('abc');
+
+        $emi->persist($video);
+        $emi->flush();
+      
+
+        return $this->redirectToRoute('app_figure_edit', ['id' => $id]);
     }
 }
 

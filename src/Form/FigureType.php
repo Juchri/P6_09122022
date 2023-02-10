@@ -8,22 +8,24 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+
 
 class FigureType extends AbstractType
 {
-    /**
-     * Construction du formulaire
-     *
-     * @return void
-     */
-
-
-    public function buildForm(FormBuilderInterface $builder): void
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
                 ->add('name')
                 ->add('description')
-                ->add('category')
+                ->add('category', ChoiceType::class, [
+                    'choices'  => [
+                        'Butters' => 'butters',
+                        'Spins' => 'spins',
+                        'Grabs' => 'grabs',
+                    ],
+                ])
+
                 ->add('file', FileType::class, [
                 'label' => 'Image',
 
@@ -36,7 +38,7 @@ class FigureType extends AbstractType
 
                 // unmapped fields can't define their validation using annotations !
 
-                // 'multiple' => true,
+                //'multiple' => true,
 
                 // In the associated entity, so you can use the PHP constraint classes !
                 'constraints' => [
@@ -52,19 +54,13 @@ class FigureType extends AbstractType
                             'application/x-mpegURL',
                             'video/MP2T'
                         ],
-                        'mimeTypesMessage' => 'Veuillez uploader une image valide (webp, png, jpeg ou gif)',
+                        'mimeTypesMessage' => 'Veuillez charger une image valide (webp, png, jpeg ou gif)',
                       ]),
                     ],
                   ])
         ;
     }
 
-
-    /**
-     * Defaults
-     *
-     * @return void
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

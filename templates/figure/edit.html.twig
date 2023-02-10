@@ -16,24 +16,46 @@
 <div class="example-wrapper">
     <div class="container-fluid row">
         {% if figure.filename == FALSE %}
-        <img class="img-fluid figure-image" style="max-height: 300px;" src="https://user.oc-static.com/upload/2016/11/17/14793747168201_snowboard_neige_figure_saut_shutterstock_3516624621.jpg" class="card-img-top" alt="Illustration {{ f.name }}" />
+        <img class="img-fluid figure-image" style="max-height: 300px;" src="https://user.oc-static.com/upload/2016/11/17/14793747168201_snowboard_neige_figure_saut_shutterstock_3516624621.jpg" class="card-img-top" alt="Illustration {{ figure.name }}" />
         {% else %}
-            <img class="img-fluid figure-image" style="max-height: 300px;" src="../uploads/{{ figure.filename }}" alt="Illustration {{ figure.name }}" />
+            <img class="img-fluid figure-image" style="max-height: 300px;" src="{{ asset('uploads/'~figure.filename ~'') }}" alt="Illustration {{ figure.name }}" />
         {% endif %}
         {% if is_granted('ROLE_ADMIN') %}
         <div class="container-fluid" style="display: flex; position: absolute; margin-left: auto; justify-content: end; width: 55%;">
             <a href="{{ path('app_figure_edit', {'id': figure.id}) }}"  class="btn mx-2">
-                <img src="../images/edit-w.svg" height="15" alt="Editer" />
+                <img src="{{ asset('images/edit-w.svg') }}" height="15" alt="Editer" />
+                
                 {{ form_widget(formFigure.file, { 'attr': {'label':false , 'class':'btn mx-2'}})}}
             </a>
             <a href="{{ path('app_figure_delete', {'id': figure.id}) }}"  class="btn mx-2">
-                <img src="../images/delete-w.svg" height="15" alt="Effacer" />
+                <img src="{{ asset('images/delete-w.svg') }}"  height="15" alt="Effacer" />
             </a>
         </div>
 
         {% endif %}
 
     </div>
+
+     <table class="table table-striped">
+        <tr>
+            <th>
+                Titre vidéo
+            </th>
+        </tr>
+        {% for v in figure.videos %}
+        <tr>
+            <td>
+                {{ v.title }}
+            </td>
+            <td>
+                <a href="#" class="btn btn-danger">
+                    <i class="fa fa-trash"></i>
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
     <div class="container col text-center">
         <div class="mx-auto">
             <div class="card-body">
@@ -41,6 +63,7 @@
 
                 {{ form_widget(formFigure.name, { 'attr': {'label':false , 'class':'card-title h4-perso text-center'}})}}
                 {{ form_widget(formFigure.description, { 'attr': {'label':false , 'style':'height:100px'}})}}
+                {{ form_widget(formFigure.category, { 'attr': {'label':false , 'class':'col-4 mx-auto mt-4'}})}}
 
                 <div class="mx-auto col d-flex justify-content-center">
                     <p class="card-title h6 m-4" style="font-style: italic; color : grey;">Créée le {{ figure.createdAt |date('d-m-Y') }}</p>
@@ -58,6 +81,34 @@
             </a>
             <button type="submit" class="btn btn-primary-perso m-4">Valider</button>
             {{ form_end(formFigure) }}
+
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Ajouter une vidéo
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Ajouter une vidéo</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{ path('add_video') }}" method="post">
+                            <input class="form-control" type="file" name="title" multiple="multiple"/>
+                            <input type="hidden" name="id" value="{{ figure.id }}" />
+                            <button type="submit" class="btn btn-primary mt-3 ">Ajouter la vidéo</button>
+                        </form>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+            </div>
             <a href="{{ path('app_main')}}"  class="btn btn-light ml-auto">Retour aux figures</a>
 
         </div>

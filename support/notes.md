@@ -92,3 +92,19 @@ Prochaine fois (27  janvier) :
 
 
 - Comment faire pour faire un set de 10 figures ?
+
+
+Prochaine fois (10 février) : 
+
+- {{ asset }} => mettre les images dans un répertoire asset  ✅
+
+- menu déroulant select > code à mettre 
+
+- faire la fenêtre pour ajouter vidéos et images
+- lazy loader
+
+
+Prochaine fois (11 février) : 
+- faire upload sans formulaire et avec formulaire 
+
+- menu déroulant 

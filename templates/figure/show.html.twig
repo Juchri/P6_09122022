@@ -9,7 +9,7 @@
         {% if figure.filename == FALSE %}
         <img class="img-fluid figure-image" style="max-height: 300px;" src="https://user.oc-static.com/upload/2016/11/17/14793747168201_snowboard_neige_figure_saut_shutterstock_3516624621.jpg" class="card-img-top" alt="Illustration {{ figure.name }}" />
         {% else %}
-            <img class="img-fluid figure-image" style="max-height: 300px;" src="../uploads/{{ figure.filename }}" alt="Illustration {{ figure.name }}" />
+            <img class="img-fluid figure-image" style="max-height: 300px;" src="{{ asset('uploads/'~figure.filename ~'') }}" alt="Illustration {{ figure.name }}" alt="Illustration {{ figure.name }}" />
         {% endif %}
     </div>
     <div class="container col text-center">

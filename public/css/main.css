@@ -22,6 +22,11 @@ a:hover {
   background-color: #6b949e;
 }
 
+.btn-perso-primary {
+  background-color: #6b949e;
+  color: white;
+}
+
 .btn-perso-danger {
   background-color: #ff874e;
   color: white;
@@ -89,6 +94,11 @@ nav .visible-phone {
   display: flex;
   flex-direction: row;
 }
+
+.images-container img{
+ /* opacity: 0; */
+}
+
 
 /* Loader */
 
@@ -196,6 +206,7 @@ nav .visible-phone {
   }
 }
 
+
 /* Fin Loader */
 
   /* On screens that are 600px or less, set the background color to olive */
@@ -240,4 +251,6 @@ nav .visible-phone {
       background-color: #D1E1E5;
       transition: 0.9s;
     }
+
+
   }

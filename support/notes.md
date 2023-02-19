@@ -97,14 +97,26 @@ Prochaine fois (27  janvier) :
 Prochaine fois (10 février) : 
 
 - {{ asset }} => mettre les images dans un répertoire asset  ✅
-
-- menu déroulant select > code à mettre 
+- menu déroulant select ✅
 
 - faire la fenêtre pour ajouter vidéos et images
 - lazy loader
 
 
-Prochaine fois (11 février) : 
-- faire upload sans formulaire et avec formulaire 
+Prochaine fois (11 février) :
 
-- menu déroulant 
+- faire upload sans formulaire et avec formulaire
+- lazy loader
+
+
+
+18 février :
+
+
+- modifications images plus jolies
+- lazy loader
+- suprimer et revenir à la page d'édition
+- bouton afficher plus
+
+
+Prochaine fois : Mardi - 18h30 

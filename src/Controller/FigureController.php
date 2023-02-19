@@ -11,11 +11,16 @@ use App\Entity\Video;
 
 use App\Form\FigureType;
 use App\Form\MessageType;
+use App\Form\VideoType;
+use App\Form\ImageType;
+
+
 
 use App\Repository\FigureRepository;
 use App\Repository\MessageRepository;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\File\File;
@@ -23,6 +28,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\String\Slugger\SluggerInterface;
+
 use Doctrine\ORM\EntityManagerInterface;
 
 use DateTime;
@@ -43,7 +49,8 @@ class FigureController extends AbstractController
 
         $figure = new Figure();
         $formFigure = $this->createForm(FigureType::class, $figure);
-
+        $video = new Video();
+        $formVideo = $this->createForm(VideoType::class, $video);
         $formFigure->handleRequest($request);
 
         if ($formFigure->isSubmitted() && $formFigure->isValid()) {
@@ -79,7 +86,49 @@ class FigureController extends AbstractController
             return $this->redirectToRoute('app_main');
         }
 
-        return $this->render('figure/index.html.twig', ['formFigure' => $formFigure->createView()]);
+        $image = new Image();
+        $formImage = $this->createForm(ImageType::class, $image);
+        $formFigure->handleRequest($request);
+
+        if ($formImage->isSubmitted() && $formFigure->isValid()) {
+            $figure->setCreatedAt(new \DateTime());
+            $figure->setCreator($this->getUser());
+            $file = $formFigure->get('file')->getData();
+
+              // This condition is needed because the 'file' field is not required !
+              // So the PDF file must be processed only when a file is uploaded !
+              if ($file === TRUE) {
+                $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+              // This is needed to safely include the file name as part of the URL
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$file->guessExtension();
+
+                // Move the file to the directory where brochures are stored !
+                try {
+                  $file->move(
+                  $this->getParameter('files_directory'),
+                  $newFilename
+                  );
+                } catch (FileException $e) {
+                      // ... Handle exception if something happens during file upload !
+                }
+
+                  // Updates the 'Filename' property to store the PDF file name !
+                  // Instead of its contents !
+                $figure->setFilename($newFilename);
+              }
+
+            $emi->persist($figure);
+            $emi->flush();
+            return $this->redirectToRoute('app_main');
+        }
+
+        return $this->render('figure/index.html.twig', [
+          'formFigure' => $formFigure->createView(),
+          'formVideo' => $formVideo->createView(),
+          'formImage' => $formImage->createView()
+
+        ]);
       }
 
       #[Route('/figure/{id<\d+>}', name: 'app_figure_show')]
@@ -124,6 +173,9 @@ class FigureController extends AbstractController
         $formFigure = $this->createForm(FigureType::class, $figure);
         $formFigure->handleRequest($request);
 
+        $video = new Video();
+        $formVideo = $this->createForm(VideoType::class, $video);
+
         if ($formFigure->isSubmitted() && $formFigure->isValid()) {
           $figure->setModifiedAt(new \DateTime());
           $figure->setCreator($this->getUser());
@@ -147,11 +199,46 @@ class FigureController extends AbstractController
 
           $emi->persist($figure);
           $emi->flush();
-          return $this->redirectToRoute('app_main');
+          $id = $figure->getId();
+          return $this->redirectToRoute('app_figure_edit', ['id' => $id]);
+
+        }
+
+        $image = new Image();
+        $formImage = $this->createForm(ImageType::class, $image);
+
+        if ($formFigure->isSubmitted() && $formFigure->isValid()) {
+          $figure->setModifiedAt(new \DateTime());
+          $figure->setCreator($this->getUser());
+          $file = $formFigure->get('file')->getData();
+
+        if ($file) {
+          $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+          $safeFilename = $slugger->slug($originalFilename);
+          $newFilename = $safeFilename.'-'.uniqid().'.'.$file->guessExtension();
+
+          try {
+            $file->move(
+              $this->getParameter('files_directory'),
+              $newFilename
+              );
+            } catch (FileException $e) {
+            }
+
+            $figure->setFilename($newFilename);
+          }
+
+          $emi->persist($figure);
+          $emi->flush();
+          $id = $figure->getId();
+          return $this->redirectToRoute('app_figure_edit', ['id' => $id]);
+
         }
 
       return $this->render('figure/edit.html.twig', [
         'formFigure' => $formFigure->createView(),
+        'formVideo' => $formVideo->createView(),
+        'formImage' => $formImage->createView(),
         'figure' => $figure]);
     }
 
@@ -174,41 +261,190 @@ class FigureController extends AbstractController
     #[Route('/add-video', name: 'add_video')]
     public function add_video(Request $request, EntityManagerInterface $emi, FigureRepository $repo, SluggerInterface $slugger)
     {
-      //var_dump($request->$request->get('title')); die;
-      $video = new Video();
-      //  $video->setTitle($request->request->get('title'));
+        $video = new Video();
+        $formVideo = $this->createForm(VideoType::class, $video);
+        $formVideo->handleRequest($request);
 
-        $videoFile = $request->request->get('title');
+          $file = $formVideo->get('content')->getData();
+          $video->setContent('');
+            // This condition is needed because the 'file' field is not required !
+            // So the PDF file must be processed only when a file is uploaded !
+            if ($file) {
+              $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+            // This is needed to safely include the file name as part of the URL
+              $safeFilename = $slugger->slug($originalFilename);
+              $newFilename = $safeFilename.'-'.uniqid().'.'.$file->guessExtension();
 
-        if($videoFile){
-          // $originalFilename = $request->request->get('title');
-          $safeVideoFile = $slugger->slug($videoFile);
-          $newFilename = $safeVideoFile.'-'.uniqid().'.'.$videoFile->guessExtension();
+              // Move the file to the directory where brochures are stored !
+              try {
+                $file->move(
+                $this->getParameter('files_directory'),
+                $newFilename
+                );
+              } catch (FileException $e) {
+                    // ... Handle exception if something happens during file upload !
+              }
 
-          try {
-            $videoFile->move(
-              $this->getParameter('files_directory'),
-              $newFilename
-              );
-            } catch (FileException $e) {
-          }
-
-          $video->setTitle($newFilename);
-        }
-      
+                // Updates the 'Filename' property to store the PDF file name !
+                // Instead of its contents !
+              $video->setContent($newFilename);
+            }
 
         $id = $request->request->get('id');
-
         $figure = $repo->find($id);
         $video->setFigure($figure);
-        $video->setContent('abc');
 
         $emi->persist($video);
         $emi->flush();
-      
 
         return $this->redirectToRoute('app_figure_edit', ['id' => $id]);
     }
+
+
+    /**
+     * Delete videos
+     *
+     * @return void
+     */
+
+
+      #[Route('/video/delete/{id<\d+>}', name: 'app_video_delete')]
+     public function delete_video(Video $video, EntityManagerInterface $emi)
+     {
+         $emi->remove($video);
+         $emi->flush();
+
+         return $this->redirectToRoute('app_main');
+      }
+
+    /**
+     * Add images
+     *
+     * @return void
+     */
+
+
+    #[Route('/add-image', name: 'add_image')]
+    public function add_image(Request $request, EntityManagerInterface $emi, FigureRepository $repo, SluggerInterface $slugger)
+    {
+        $image = new Image();
+        $formImage = $this->createForm(ImageType::class, $image);
+        $formImage->handleRequest($request);
+
+          $file = $formImage->get('content')->getData();
+          $image->setContent('');
+            // This condition is needed because the 'file' field is not required !
+            // So the PDF file must be processed only when a file is uploaded !
+            if ($file) {
+              $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+            // This is needed to safely include the file name as part of the URL
+              $safeFilename = $slugger->slug($originalFilename);
+              $newFilename = $safeFilename.'-'.uniqid().'.'.$file->guessExtension();
+
+              // Move the file to the directory where brochures are stored !
+              try {
+                $file->move(
+                $this->getParameter('files_directory'),
+                $newFilename
+                );
+              } catch (FileException $e) {
+                    // ... Handle exception if something happens during file upload !
+              }
+
+                // Updates the 'Filename' property to store the PDF file name !
+                // Instead of its contents !
+              $image->setContent($newFilename);
+            }
+
+        $id = $request->request->get('id');
+        $figure = $repo->find($id);
+        $image->setFigure($figure);
+
+        $emi->persist($image);
+        $emi->flush();
+
+        return $this->redirectToRoute('app_figure_edit', ['id' => $id]);
+    }
+
+/*
+    #[Route('/add-image-different-forms', name: 'add_image')]
+    public function add_image(Request $request, EntityManagerInterface $emi, FigureRepository $repo, SluggerInterface $slugger)
+    {
+
+      $formAddImage = $this->createForm(ImageType::class, null, ['attr' => ['id' => 'formAddImage']]);
+      $formAddImage->handleRequest($request);
+
+      if ($formAddImage->isSubmitted() && $formAddImage->isValid()) {
+
+        $image = new Image();
+        $formAddImage = $this->createForm(ImageType::class, $image);
+        $formAddImage->handleRequest($request);
+
+          $file = $formAddImage->get('content')->getData();
+          $image->setContent('');
+            // This condition is needed because the 'file' field is not required !
+            // So the PDF file must be processed only when a file is uploaded !
+            if ($file) {
+              $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+            // This is needed to safely include the file name as part of the URL
+              $safeFilename = $slugger->slug($originalFilename);
+              $newFilename = $safeFilename.'-'.uniqid().'.'.$file->guessExtension();
+
+              // Move the file to the directory where brochures are stored !
+              try {
+                $file->move(
+                $this->getParameter('files_directory'),
+                $newFilename
+                );
+              } catch (FileException $e) {
+                    // ... Handle exception if something happens during file upload !
+              }
+
+                // Updates the 'Filename' property to store the PDF file name !
+                // Instead of its contents !
+              $image->setContent($newFilename);
+            }
+
+        $id = $request->request->get('id');
+        $figure = $repo->find($id);
+        $image->setFigure($figure);
+
+        $emi->persist($image);
+        $emi->flush();
+
+        return $this->redirectToRoute('app_figure_edit', ['id' => $id]);
+
+      }
+
+      $formEdit = $this->createForm(FooFormType::class, null, ['attr' => ['id' => 'formEdit']]);
+      $formEdit->handleRequest($request);
+      if (($formEdit->isSubmitted() && $form2->isValid())) {
+          // ...
+      }
+
+        return $this->render('figure/edit.html.twig', [
+          'formAddImage' => $formAddImage->createView(),
+          'formEditImage' => $formEdit->createView(),
+        ]);
+    }
+
+*/
+     /**
+     * Delete images
+     *
+     * @return void
+     */
+
+
+    #[Route('/image/delete/{id<\d+>}', name: 'app_image_delete')]
+    public function delete_image(Image $image, Figure $figure, EntityManagerInterface $emi)
+    {
+        $emi->remove($image);
+        $emi->flush();
+
+        return $this->redirectToRoute('app_main');
+
+      }
 }
 
 

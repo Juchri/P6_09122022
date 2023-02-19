@@ -44,10 +44,10 @@ class ImageRepository extends ServiceEntityRepository
 //     */
 //    public function findByExampleField($value): array
 //    {
-//        return $this->createQueryBuilder('i')
-//            ->andWhere('i.exampleField = :val')
+//        return $this->createQueryBuilder('v')
+//            ->andWhere('v.exampleField = :val')
 //            ->setParameter('val', $value)
-//            ->orderBy('i.id', 'ASC')
+//            ->orderBy('v.id', 'ASC')
 //            ->setMaxResults(10)
 //            ->getQuery()
 //            ->getResult()
@@ -56,8 +56,8 @@ class ImageRepository extends ServiceEntityRepository
 
 //    public function findOneBySomeField($value): ?Image
 //    {
-//        return $this->createQueryBuilder('i')
-//            ->andWhere('i.exampleField = :val')
+//        return $this->createQueryBuilder('v')
+//            ->andWhere('v.exampleField = :val')
 //            ->setParameter('val', $value)
 //            ->getQuery()
 //            ->getOneOrNullResult()

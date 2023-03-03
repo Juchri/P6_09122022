@@ -52,8 +52,11 @@
         {% if is_granted('ROLE_ADMIN') %}
 
         <div class="col mx-auto mt-4" style="width: 100%;">
+            {{ form_start(messageForm) }}
                 {{ form_widget(messageForm.content, { 'attr': {'label':false }})}}
                 <button type="submit" class="btn btn-primary-perso m-4">Envoyer</button>
+            {{ form_end(messageForm) }}
+
         </div>
 
         {% endif %}

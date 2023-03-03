@@ -20,30 +20,26 @@
 
 <div class="example-wrapper">
     <div class="container-fluid row">
-        {% if figure.filename == FALSE %}
-        <img class="img-fluid figure-image" style="max-height: 300px;" src="https://user.oc-static.com/upload/2016/11/17/14793747168201_snowboard_neige_figure_saut_shutterstock_3516624621.jpg" class="card-img-top" alt="Illustration {{ figure.name }}" />
-        {% else %}
-            <img class="img-fluid figure-image" style="max-height: 300px;" src="{{ asset('uploads/'~figure.filename ~'') }}" alt="Illustration {{ figure.name }}" />
-        {% endif %}
-        {% if is_granted('ROLE_ADMIN') %}
         <div class="container-fluid" style="display: flex; position: absolute; margin-left: auto; justify-content: end; width: 55%;">
             <a href="{{ path('app_figure_edit', {'id': figure.id}) }}"  class="btn mx-2">
-                <img src="{{ asset('images/edit-w.svg') }}" height="15" alt="Editer" />
-                
                 {{ form_widget(formFigure.file, { 'attr': {'label':false , 'class':'btn mx-2'}})}}
-            </a>
-            <a href="{{ path('app_figure_delete', {'id': figure.id}) }}"  class="btn mx-2">
-                <img src="{{ asset('images/delete-w.svg') }}"  height="15" alt="Effacer" />
+                <div class="btn btn-perso-danger ml-4" >
+                    <img src="{{ asset('images/edit-w.svg') }}" height="15" alt="Editer" />
+                </div>
+
             </a>
         </div>
-
+        {% if figure.filename == FALSE %}
+        <img class="img-fluid figure-image" style="margin-top: 60px; max-height: 300px;" src="https://user.oc-static.com/upload/2016/11/17/14793747168201_snowboard_neige_figure_saut_shutterstock_3516624621.jpg" class="card-img-top" alt="Illustration {{ figure.name }}" />
+        {% else %}
+            <img class="img-fluid figure-image" style="margin-top: 60px; max-height: 300px;" src="{{ asset('uploads/'~figure.filename ~'') }}" alt="Illustration {{ figure.name }}" />
+        {% endif %}
+        {% if is_granted('ROLE_ADMIN') %}
         {% endif %}
 
     </div>
     
-    {% if figure.images == TRUE %}
-    {# ça fonctionne pas #}
-
+  
     <button type="button" class="btn d-block d-sm-none mx-auto mt-3" data-id="1" onclick="afficher()">Voir plus</button>
     <div class="box" id="box-1">
 
@@ -53,91 +49,35 @@
                 {% for i in figure.images %}
                     <div class="col-4 m-2">
                         <a href="{{ asset('uploads/'~i.content ~'') }}" class="show-gallery" data-gallery="gallery-{{figure.id}}'"> <img class="img-fluid w-100" style="object-fit: cover; height:100px;" src="{{ asset('uploads/'~i.content ~'') }}" alt="Illustration {{ i.title }}" /> </a>
-                        <div class="ml-auto d-flex col-7">
+                        <div class="ml-auto d-flex">
 
-                            <a class="btn btn-perso-danger m-2" onclick="return confirm('Êtes-vous sûr(e) de supprimer cette image ?')" href="{{ path('app_image_delete', {'id': i.id}) }}">
+                            <a class="btn btn-perso-danger ml-auto mt-2 mr-0" onclick="return confirm('Êtes-vous sûr(e) de supprimer cette image ?')" href="{{ path('app_image_delete', {'id': i.id}) }}">
                                 <i class="fa fa-trash m-auto"></i>
                             </a>
-
-                            <button type="button" class="btn btn-perso-primary m-2" data-bs-toggle="modal" data-bs-target="#editImage">
-                                <i class="fa fa-edit m-auto"></i>
-                            </button>
-
-
-                <!-- Modal -->
-                    <div class="modal fade" id="editImage" tabindex="-1" aria-labelledby="editImage" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="editImage">Editer une image</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                {{ form_start(formEditImage,{'action':path('edit_image', { 'id': i.id })})  }}
-                                    {{ form_widget(formEditImage.content, { 'attr': {'label':false , 'class':'btn mx-2'}})}}
-                                    {{ form_widget(formEditImage.title, { 'attr': {'label':false , 'class':'btn mx-2'}})}}
-                                    <input type="hidden" name="figure_id" value="{{ figure.id }}" />
-                                    <input type="hidden" name="image_id" value="{{ i.id }}" />
-                                    <button type="submit" class="btn btn-primary mt-3 ">Modifier l'image</button>
-                                {{ form_end(formEditImage) }}
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-        {% endfor %}
+                {% endfor %}
 
-        {% for v in figure.videos %}
-        <div class="col-4 m-2">
-            <video controls width="100%" height="100px"> <source src="{{ asset('uploads/'~v.content ~'') }}" type="video/webm"> </video>
-            <div class="ml-auto d-flex col-7">
-                    <button type="button" class="btn btn-perso-primary m-2" data-bs-toggle="modal" data-bs-target="#editVideo">
-                    <i class="fa fa-edit m-auto"></i>
-                </button>
-                    <a class="btn btn-perso-danger m-2" onclick="return confirm('Êtes-vous sûr(e) de supprimer cette vidéo ?')" href="{{ path('app_video_delete', {'id': v.id}) }}"  class="btn mr-4">
-                    <i class="fa fa-trash m-auto"></i>
-                </a>
-            </div>
-        </div>
-
-        <!-- Modal -->
-        <div class="modal fade" id="editVideo" tabindex="-1" aria-labelledby="editVideo" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="editVideo">Editer une vidéo</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        {{ form_start(formEditVideo,{'action':path('edit_video')}) }}
-                            <p>Id video: {{ v.id }}</p>
-                            <input type="hidden" name="figure_id" value="{{ figure.id }}" />
-                            <input type="hidden" name="video_id" value="{{ v.id }}" />
-                            <button type="submit" class="btn btn-primary mt-3 ">Ajouter la vidéo</button>
-                        {{ form_end(formEditVideo) }}
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                {% for v in figure.videos %}
+                <div class="col-4 m-2">
+                    <video controls width="100%" height="100px"> <source src="{{ asset('uploads/'~v.content ~'') }}" type="video/webm"> </video>
+                    <div class="ml-auto d-flex">
+                        <a class="btn btn-perso-danger ml-auto mr-0" onclick="return confirm('Êtes-vous sûr(e) de supprimer cette vidéo ?')" href="{{ path('app_video_delete', {'id': v.id}) }}"  class="btn mr-4">
+                            <i class="fa fa-trash m-auto"></i>
+                        </a>
                     </div>
                 </div>
+                {% endfor %}
             </div>
+
         </div>
-        {% endfor %}
-
-    </div>
-
-</div>
-
-{% endif %}
 
 
-    <div class="container col text-center">
-        <div class="mx-auto">
-            <div class="card-body">
+
+
+        <div class="container col text-center">
+            <div class="mx-auto">
+                <div class="card-body">
 
 
                 {{ form_widget(formFigure.name, { 'attr': {'label':false , 'class':'card-title h4-perso text-center'}})}}

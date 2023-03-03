@@ -37,7 +37,7 @@ use DateTime;
 
 class FigureController extends AbstractController
 {
-    #[Route('/figure', name: 'app_figure')]
+    #[Route('/admin/figure', name: 'app_figure')]
 
     /**
      * Creation of figure
@@ -164,7 +164,7 @@ class FigureController extends AbstractController
           return $this->render('figure/show.html.twig', ['messageForm' => $messageForm->createView(),'figure' => $figure]);
       }
 
-    #[Route('/figure/edit/{id<\d+>}', name: 'app_figure_edit')]
+    #[Route('/figure/admin/edit/{id<\d+>}', name: 'app_figure_edit')]
      /**
      * Edit figures
      *

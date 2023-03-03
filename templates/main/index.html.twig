@@ -19,7 +19,7 @@
 
     <div class="container row d-flex justify-content-sm-between mx-auto">
            {% for f in figures %}
-                <div class="card mb-4 my-2 mx-2 p-0 col-md-2">
+                <div class="card mb-4 my-2 mx-2 p-0 col-md-2 lazy">
                     <a href="{{ path('app_figure_show', {'id': f.id}) }}" >
                     <div class="images-container">
                     

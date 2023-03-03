@@ -40,11 +40,14 @@
         {% endif %}
 
     </div>
+    
+    {% if figure.images == TRUE %}
+    {# ça fonctionne pas #}
 
-    <button type="button" class="btn d-block d-sm-none mx-auto mt-3" data-id="1">Voir plus</button>
+    <button type="button" class="btn d-block d-sm-none mx-auto mt-3" data-id="1" onclick="afficher()">Voir plus</button>
     <div class="box" id="box-1">
 
-        <div class="container">
+        <div class="container visible-off">
             <div class="row">
 
                 {% for i in figure.images %}
@@ -60,29 +63,77 @@
                                 <i class="fa fa-edit m-auto"></i>
                             </button>
 
-                   
 
+                <!-- Modal -->
+                    <div class="modal fade" id="editImage" tabindex="-1" aria-labelledby="editImage" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="editImage">Editer une image</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                {{ form_start(formEditImage,{'action':path('edit_image', { 'id': i.id })})  }}
+                                    {{ form_widget(formEditImage.content, { 'attr': {'label':false , 'class':'btn mx-2'}})}}
+                                    {{ form_widget(formEditImage.title, { 'attr': {'label':false , 'class':'btn mx-2'}})}}
+                                    <input type="hidden" name="figure_id" value="{{ figure.id }}" />
+                                    <input type="hidden" name="image_id" value="{{ i.id }}" />
+                                    <button type="submit" class="btn btn-primary mt-3 ">Modifier l'image</button>
+                                {{ form_end(formEditImage) }}
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
                         </div>
                     </div>
-                {% endfor %}
-
-                {% for v in figure.videos %}
-                    <div class="col-4 m-2">
-                        <video controls width="100%" height="100px"> <source src="{{ asset('uploads/'~v.content ~'') }}" type="video/webm"> </video>
-                        <div class="ml-auto d-flex col-7">
-                            <a class="btn btn-perso-primary m-2" onclick="return confirm('Êtes-vous sûr(e) de modifier cette vidéo ?')" href="{{ path('app_video_delete', {'id': v.id}) }}"  class="btn mr-4">
-                                <i class="fa fa-edit m-auto"></i>
-                            </a>
-                              <a class="btn btn-perso-danger m-2" onclick="return confirm('Êtes-vous sûr(e) de supprimer cette vidéo ?')" href="{{ path('app_video_delete', {'id': v.id}) }}"  class="btn mr-4">
-                                <i class="fa fa-trash m-auto"></i>
-                            </a>
-                        </div>
-                    </div>
-                {% endfor %}
-
+                </div>
             </div>
         </div>
+        {% endfor %}
+
+        {% for v in figure.videos %}
+        <div class="col-4 m-2">
+            <video controls width="100%" height="100px"> <source src="{{ asset('uploads/'~v.content ~'') }}" type="video/webm"> </video>
+            <div class="ml-auto d-flex col-7">
+                    <button type="button" class="btn btn-perso-primary m-2" data-bs-toggle="modal" data-bs-target="#editVideo">
+                    <i class="fa fa-edit m-auto"></i>
+                </button>
+                    <a class="btn btn-perso-danger m-2" onclick="return confirm('Êtes-vous sûr(e) de supprimer cette vidéo ?')" href="{{ path('app_video_delete', {'id': v.id}) }}"  class="btn mr-4">
+                    <i class="fa fa-trash m-auto"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="editVideo" tabindex="-1" aria-labelledby="editVideo" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editVideo">Editer une vidéo</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        {{ form_start(formEditVideo,{'action':path('edit_video')}) }}
+                            <p>Id video: {{ v.id }}</p>
+                            <input type="hidden" name="figure_id" value="{{ figure.id }}" />
+                            <input type="hidden" name="video_id" value="{{ v.id }}" />
+                            <button type="submit" class="btn btn-primary mt-3 ">Ajouter la vidéo</button>
+                        {{ form_end(formEditVideo) }}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
     </div>
+
+</div>
+
+{% endif %}
+
 
     <div class="container col text-center">
         <div class="mx-auto">
@@ -111,10 +162,10 @@
             {{ form_end(formFigure) }}
 
             <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#imageModal">
+            <button type="button" class="btn btn-primary-perso m-4" data-bs-toggle="modal" data-bs-target="#imageModal">
                 Ajouter une image
             </button>
-             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#videoModal">
+             <button type="button" class="btn  btn-primary-perso m-4" data-bs-toggle="modal" data-bs-target="#videoModal">
                 Ajouter une vidéo
             </button>
 
@@ -142,33 +193,8 @@
             </div>
             <a href="{{ path('app_main')}}"  class="btn btn-light ml-auto">Retour aux figures</a>
 
-{# 
-        <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModal" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="imageModal">Ajouter une image</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        {{ form_start(formAddImage,{'action':path('add_image')}) }}
-                            <input name="{{ field_name(formAddImage.content) }}" type="file">
-                            <input type="hidden" name="id" value="{{ figure.id }}" />
-                            <button type="submit" class="btn btn-primary mt-3 ">Ajouter l'image</button>
-                        {{ form_end(formAddImage) }}
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-            </div>
-            <a href="{{ path('app_main')}}"  class="btn btn-light ml-auto">Retour aux figures</a>
-
-        </div>
-#}
     </div>
 </div>
 
-
 {% endblock %}
+

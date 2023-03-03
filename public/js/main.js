@@ -1,45 +1,33 @@
 console.log('js chargé');
 
-const images = document.querySelectorAll(".images-container img")
-
+const images = document.querySelectorAll(".lazy")
 let options = {
-  // root: null,
-  rootMargin: "-10% 0px",
-  threshold: 0
+// root: null,
+rootMargin: "-10% 0px",
+threshold: 0.4
 }
 
 function handleIntersect(entries){
     console.log(entries);
-
     entries.forEach(entry => {
         if(entry.isIntersecting){
-          entry.target.style.opacity = 1;
+            entry.target.style.opacity = 1;
         }
-      })
+    })
 }
 
-const observer = new IntersectionObserver(handleIntersect, options)
-
+const observer = new IntersectionObserver (handleIntersect, options)
 images.forEach(image => {
-  observer.observe(image)
+    observer.observe(image)
 })
 
 
-$(document).ready(function(){
-
-  // clic sur les boutons
-  $('.btn').on('click',function(event){
-    event.stopPropagation(); // important
-    var id = $(this).data('id');  // on récupère le data-id
-    $(".box:not(#box-"+id+")").show(); // on ferme les box, sauf celle concernée
-    $("#box-"+id).slideToggle(); // on ouvre ou ferme celle concernée
-  });
-  // clic en dehors des div
-  $(window).on('click', function(){
-    $(".box").slideUp(); // on ferme
-  });
-
- });
-
-
-
+function afficher(){
+    let selecteur = document.querySelector('.visible-off');
+    let info = selecteur.style.display;
+    if(info == 'none'){
+        selecteur.style.display = 'block';
+    }else{
+        selecteur.style.display = 'none';
+    }
+}

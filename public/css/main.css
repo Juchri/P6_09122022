@@ -90,13 +90,14 @@ a:hover {
   display: none;
 }
 
+
 nav .visible-phone {
   display: flex;
   flex-direction: row;
 }
 
-.images-container img{
- /* opacity: 0; */
+.lazy{
+  opacity: 0;
 }
 
 
@@ -252,5 +253,9 @@ nav .visible-phone {
       transition: 0.9s;
     }
 
+
+    .visible-off {
+      display: none;
+    }
 
   }
